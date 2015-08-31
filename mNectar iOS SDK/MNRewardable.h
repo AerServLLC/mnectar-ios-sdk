@@ -17,6 +17,9 @@
 @interface MNRewardable : NSObject
 
 @property (nonatomic, weak) id<MNRewardableDelegate> delegate;
+@property (nonatomic, assign, readonly, getter=isAdReady) BOOL adReady;
+
++ (instancetype)rewardableForAdUnitId:(NSString *)adUnitId;
 
 - (instancetype)initWithAdUnitId:(NSString *)adUnitId;
 

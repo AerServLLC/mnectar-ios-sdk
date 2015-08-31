@@ -20,8 +20,9 @@
 
 @property (nonatomic, weak) id<MNMRAIDInterstitialViewControllerDelegate> delegate;
 
-- (instancetype)initWithHTML:(NSString *)html baseURL:(NSURL *)baseURL;
+- (instancetype)init;
 
+- (void)loadHTML:(NSString *)html baseURL:(NSURL *)baseURL;
 - (void)showFromViewController:(UIViewController *)viewController;
 - (void)show;
 

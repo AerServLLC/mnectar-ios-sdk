@@ -1,4 +1,5 @@
-(function (external) {
+
+//(function (external) {
     var mraid = window.mraid = {};
 
     mraid._call = function (command) {
@@ -48,7 +49,7 @@
         }
     };
 
-    var _state = null;
+    var _state = "loading";
 
     mraid._setState = function (state) {
         _state = state;
@@ -58,7 +59,7 @@
         return _state;
     };
 
-    var _placementType = null;
+    var _placementType = undefined;
 
     mraid._setPlacementType = function (placementType) {
         _placementType = placementType;
@@ -68,7 +69,7 @@
         return _placementType;
     };
 
-    var _isViewable = null;
+    var _isViewable = undefined;
 
     mraid._setIsViewable = function (isViewable) {
         _isViewable = isViewable;
@@ -87,9 +88,9 @@
     };
 
     var _expandProperties = {
-        "width": null,
-        "height": null,
-        "useCustomClose": null,
+        "width": undefined,
+        "height": undefined,
+        "useCustomClose": undefined,
         "isModal": true,
     };
 
@@ -128,6 +129,8 @@
 
         if (properties.hasOwnProperty("useCustomClose")) {
             _expandProperties["useCustomClose"] = properties["useCustomClose"];
+
+            mraid._call("usecustomclose");
         }
     };
 
@@ -136,13 +139,10 @@
     };
 
     var _orientationProperties = {
-        "allowOrientationChange": null,
-        "forceOrientation": null
+        "allowOrientationChange": undefined,
+        "forceOrientation": undefined
     };
 
-    mraid._setOrientationProperties = function (properties) {
-    };
-    
     mraid._getOrientationPropertyAllowOrientationChange = function () {
         return _orientationProperties["allowOrientationChange"];
     };
@@ -167,25 +167,31 @@
         if (properties.hasOwnProperty("forceOrientation")) {
             _orientationProperties["forceOrientation"] = properties["forceOrientation"];
         }
+
+        mraid._call("orientation");
     };
 
     mraid.getOrientationProperties = function () {
         return _orientationProperties;
     };
 
-    mraid.useCustomClose = function () {};
+    mraid.useCustomClose = function (useCustomClose) {
+        _expandProperties["useCustomClose"] = useCustomClose;
+
+        mraid._call("usecustomclose");
+    };
 
     mraid.resize = function () {
         mraid._call("resize");
     };
 
     var _resizeProperties = {
-        "width": null,
-        "height": null,
-        "offsetX": null,
-        "offsetY": null,
-        "customClosePosition": null,
-        "allowOffscreen": null,
+        "width": undefined,
+        "height": undefined,
+        "offsetX": undefined,
+        "offsetY": undefined,
+        "customClosePosition": undefined,
+        "allowOffscreen": undefined,
     };
 
     mraid._getResizePropertyWidth = function () {
@@ -274,7 +280,7 @@
         mraid._call("close");
     };
 
-    var _currentPosition = [null, null, null, null];
+    var _currentPosition = [undefined, undefined, undefined, undefined];
 
     mraid._setCurrentPosition = function (x, y, w, h) {
         _currentPosition[0] = x;
@@ -287,7 +293,7 @@
         return _currentPosition;
     };
 
-    var _maxSize = [null, null];
+    var _maxSize = [undefined, undefined];
 
     mraid._setMaxSize = function (w, h) {
         _maxSize[0] = w;
@@ -298,7 +304,7 @@
         return _maxSize;
     };
 
-    var _defaultPosition = [null, null, null, null];
+    var _defaultPosition = [undefined, undefined, undefined, undefined];
 
     mraid._setDefaultPosition = function (x, y, w, h) {
         _defaultPosition[0] = x;
@@ -311,7 +317,7 @@
         return _defaultPosition;
     };
 
-    var _screenSize = [null, null];
+    var _screenSize = [undefined, undefined];
     
     mraid._setScreenSize = function (w, h) {
         _screenSize[0] = w;
@@ -351,4 +357,8 @@
     mraid.createCalendarEvent = function () {};
 
     mraid.playVideo = function () {};
-})(window);
+//})(window);
+
+//console.log = function () {
+//    mraid._call("log?m=" + encodeURIComponent(Array.prototype.slice.call(arguments).join(' ')));
+//};

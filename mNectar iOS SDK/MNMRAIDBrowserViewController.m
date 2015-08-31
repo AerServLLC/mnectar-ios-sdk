@@ -2,11 +2,11 @@
 
 #define MN_NAV_HEIGHT 45
 #define MN_NAV_IMG_BACK_SIZE 28, 28
-#define MN_NAV_IMG_BACK_NORMAL "MNMRAID.bundle/chevron_left_blue"
-#define MN_NAV_IMG_BACK_DISABLED "MNMRAID.bundle/chevron_left_gray"
+#define MN_NAV_IMG_BACK_NORMAL "MNMRAID.bundle/arrow_back_blue"
+#define MN_NAV_IMG_BACK_DISABLED "MNMRAID.bundle/arrow_back_gray"
 #define MN_NAV_IMG_FORWARD_SIZE 28, 28
-#define MN_NAV_IMG_FORWARD_NORMAL "MNMRAID.bundle/chevron_right_blue"
-#define MN_NAV_IMG_FORWARD_DISABLED "MNMRAID.bundle/chevron_right_gray"
+#define MN_NAV_IMG_FORWARD_NORMAL "MNMRAID.bundle/arrow_forward_blue"
+#define MN_NAV_IMG_FORWARD_DISABLED "MNMRAID.bundle/arrow_forward_gray"
 #define MN_NAV_IMG_RELOAD_SIZE 28, 28
 #define MN_NAV_IMG_RELOAD_NORMAL "MNMRAID.bundle/refresh_blue"
 #define MN_NAV_IMG_CLOSE_SIZE 28, 28
@@ -48,32 +48,31 @@
         [_backButton setBackgroundImage:[UIImage imageNamed:@MN_NAV_IMG_BACK_NORMAL] forState:UIControlStateNormal];
         [_backButton setBackgroundImage:[UIImage imageNamed:@MN_NAV_IMG_BACK_DISABLED] forState:UIControlStateDisabled];
         [_backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+
         _forwardButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_forwardButton setFrame:CGRectMake(0, 0, MN_NAV_IMG_FORWARD_SIZE)];
         [_forwardButton setBackgroundImage:[UIImage imageNamed:@MN_NAV_IMG_FORWARD_NORMAL] forState:UIControlStateNormal];
         [_forwardButton setBackgroundImage:[UIImage imageNamed:@MN_NAV_IMG_FORWARD_DISABLED] forState:UIControlStateDisabled];
         [_forwardButton addTarget:self action:@selector(forward) forControlEvents:UIControlEventTouchUpInside];
+
         _reloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_reloadButton setFrame:CGRectMake(0, 0, MN_NAV_IMG_RELOAD_SIZE)];
         [_reloadButton setBackgroundImage:[UIImage imageNamed:@MN_NAV_IMG_RELOAD_NORMAL] forState:UIControlStateNormal];
         [_reloadButton addTarget:self action:@selector(reload) forControlEvents:UIControlEventTouchUpInside];
+
         _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_closeButton setFrame:CGRectMake(0, 0, MN_NAV_IMG_CLOSE_SIZE)];
         [_closeButton setBackgroundImage:[UIImage imageNamed:@MN_NAV_IMG_CLOSE_NORMAL] forState:UIControlStateNormal];
         [_closeButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
 
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_backButton];
+        UIBarButtonItem *forwardButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_forwardButton];
+        UIBarButtonItem *reloadButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_reloadButton];
+        UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_closeButton];
+
         UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, screen.size.height - MN_NAV_HEIGHT, screen.size.width, MN_NAV_HEIGHT)];
-        [toolbar setItems:@[
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-            [[UIBarButtonItem alloc] initWithCustomView:_backButton],
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-            [[UIBarButtonItem alloc] initWithCustomView:_forwardButton],
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-            [[UIBarButtonItem alloc] initWithCustomView:_reloadButton],
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-            [[UIBarButtonItem alloc] initWithCustomView:_closeButton],
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-        ]];
+        [toolbar setItems:@[backButtonItem, forwardButtonItem, reloadButtonItem, flexItem, closeButtonItem]];
         [[self view] addSubview:toolbar];
 
         [self updateButtons];
@@ -126,6 +125,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
+    UIInterfaceOrientationMask orientationMask = UIInterfaceOrientationMaskAll;
     NSArray *supportedInterfaceOrientations = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UISupportedInterfaceOrientations"];
 
     if (UIInterfaceOrientationIsPortrait(_orientation)) {
@@ -133,26 +133,26 @@
         BOOL portraitUpsideDownSupported = [supportedInterfaceOrientations containsObject:@"UIInterfaceOrientationPortraitUpsideDown"];
 
         if (portraitSupported && portraitUpsideDownSupported) {
-            return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+            orientationMask = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
         } else if (portraitSupported) {
-            return UIInterfaceOrientationMaskPortrait;
+            orientationMask = UIInterfaceOrientationMaskPortrait;
         } else if (portraitUpsideDownSupported) {
-            return UIInterfaceOrientationMaskPortraitUpsideDown;
+            orientationMask = UIInterfaceOrientationMaskPortraitUpsideDown;
         }
     } else if (UIInterfaceOrientationIsLandscape(_orientation)) {
         BOOL landscapeLeftSupported = [supportedInterfaceOrientations containsObject:@"UIInterfaceOrientationLandscapeLeft"];
         BOOL landscapeRightSupported = [supportedInterfaceOrientations containsObject:@"UIInterfaceOrientationLandscapeRight"];
 
         if (landscapeLeftSupported && landscapeRightSupported) {
-            return UIInterfaceOrientationMaskLandscape;
+            orientationMask = UIInterfaceOrientationMaskLandscape;
         } else if (landscapeLeftSupported) {
-            return UIInterfaceOrientationMaskLandscapeLeft;
+            orientationMask = UIInterfaceOrientationMaskLandscapeLeft;
         } else if (landscapeRightSupported) {
-            return UIInterfaceOrientationMaskLandscapeRight;
+            orientationMask = UIInterfaceOrientationMaskLandscapeRight;
         }
     }
 
-    return UIInterfaceOrientationMaskAll;
+    return orientationMask;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

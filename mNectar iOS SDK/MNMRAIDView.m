@@ -134,6 +134,11 @@
     }
 }
 
+- (void)dispatchOrientationChange
+{
+    [self inject:@"var event = document.createEvent('OrientationEvent'); event.initEvent('orientationchange', false, false); window.dispatchEvent(event);"];
+}
+
 #pragma mark - UIVIew
 
 - (void)setFrame:(CGRect)frame
@@ -143,6 +148,9 @@
     [_loadingIndicator setFrame:frame];
 
     [self updateCloseButton];
+
+    [self setCurrentPosition:[self frame]];
+    [self fireSizeChange];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -153,6 +161,7 @@
         [self setState:MNMRAIDStateDefault];
         [self fireReady];
         [self updateCloseButton];
+        [self dispatchOrientationChange];
 
         if ([_delegate respondsToSelector:@selector(mraidDidLoad)]) {
             [_delegate mraidDidLoad];
@@ -190,7 +199,13 @@
             }
         }
 
-        if ([command isEqualToString:@"resize"]) {
+        if ([command isEqualToString:@"orientation"]) {
+            if ([_delegate respondsToSelector:@selector(mraidShouldReorient)]) {
+                [_delegate mraidShouldReorient];
+            }
+        } else if ([command isEqualToString:@"usecustomclose"]) {
+            [self updateCloseButton];
+        } else if ([command isEqualToString:@"resize"]) {
             [self resize];
         } else if ([command isEqualToString:@"expand"]) {
             [self expand:[NSURL URLWithString:arguments[@"url"]]];
@@ -198,6 +213,8 @@
             [self close];
         } else if ([command isEqualToString:@"open"]) {
             [self open:[NSURL URLWithString:arguments[@"url"]]];
+        } else if ([command isEqualToString:@"log"]) {
+            NSLog(@"%@", arguments[@"m"]);
         } else {
             [self command:command arguments:arguments];
         }
@@ -223,7 +240,7 @@
 
 - (void)setState:(MNMRAIDState)state
 {
-    [self inject:[NSString stringWithFormat:@"mraid._setState(\"%@\");", stringFromState(state)]];
+    [self inject:[NSString stringWithFormat:@"mraid._setState(\"%@\");true;", stringFromState(state)]];
 
     _state = state;
 
@@ -232,7 +249,7 @@
 
 - (void)setIsViewable:(BOOL)isViewable
 {
-    [self inject:[NSString stringWithFormat:@"mraid._setIsViewable(%@);", isViewable ? @"true" : @"false"]];
+    [self inject:[NSString stringWithFormat:@"mraid._setIsViewable(%@);true;", isViewable ? @"true" : @"false"]];
 
     _isViewable = isViewable;
 
@@ -576,7 +593,7 @@
 
 - (void)fireReady
 {
-    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"ready\");"]];
+    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"ready\");true;"]];
 }
 
 - (void)fireError:(NSString *)message action:(NSString *)action
@@ -586,17 +603,17 @@
 
 - (void)fireStateChange
 {
-    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"stateChange\", \"%@\");", stringFromState(_state)]];
+    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"stateChange\", \"%@\"); mraid.getState();", stringFromState(_state)]];
 }
 
 - (void)fireViewableChange
 {
-    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"viewableChange\", %@);", _isViewable ? @"true" : @"false"]];
+    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"viewableChange\", %@); mraid.isViewable();", _isViewable ? @"true" : @"false"]];
 }
 
 - (void)fireSizeChange
 {
-    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"sizeChange\", %.0f, %0f);", _currentPosition.size.width, _currentPosition.size.height]];
+    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"sizeChange\", %.0f, %0f); mraid.getCurrentPosition();", _currentPosition.size.width, _currentPosition.size.height]];
 }
 
 @end

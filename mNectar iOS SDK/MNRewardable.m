@@ -6,21 +6,34 @@
 
 @property (nonatomic, strong) MNMRAIDInterstitialViewController *mraidInterstitialViewController;
 @property (nonatomic, strong) MNAdClient *adClient;
-@property (nonatomic, assign, getter=isAdLoading) BOOL adLoading;
-@property (nonatomic, assign, getter=isAdLoaded) BOOL adLoaded;
 
 @end
 
+static NSMutableDictionary *rewardables = nil;
+
 @implementation MNRewardable
 
-@synthesize delegate = _delegate;
++ (instancetype)rewardableForAdUnitId:(NSString *)adUnitId
+{
+    static dispatch_once_t predicate;
+
+    dispatch_once(&predicate, ^{
+        rewardables = [[NSMutableDictionary alloc] init];
+    });
+
+    if (![rewardables objectForKey:adUnitId]) {
+        [rewardables setObject:[[[self class] alloc] initWithAdUnitId:adUnitId] forKey:adUnitId];
+    }
+
+    return [rewardables objectForKey:adUnitId];
+}
 
 - (instancetype)initWithAdUnitId:(NSString *)adUnitId
 {
     if (self = [super init]) {
+        _adReady = NO;
+
         _adClient = [[MNAdClient alloc] initWithAdUnitId:adUnitId];
-        _adLoading = NO;
-        _adLoaded = NO;
     }
 
     return self;
@@ -28,17 +41,13 @@
 
 - (void)loadAd
 {
-    if (!_adLoading && !_adLoaded) {
-        _adLoading = YES;
+    if (!_mraidInterstitialViewController) {
+        _mraidInterstitialViewController = [[MNMRAIDInterstitialViewController alloc] init];
+        [_mraidInterstitialViewController setDelegate:self];
 
         [_adClient requestAd:^(NSURL *baseURL, NSInteger status, NSDictionary *headers, NSData *data, NSError *error) {
-            _adLoading = NO;
-
             if (data && !error) {
-                _mraidInterstitialViewController = [[MNMRAIDInterstitialViewController alloc] initWithHTML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] baseURL:baseURL];
-                [_mraidInterstitialViewController setDelegate:self];
-
-                _adLoaded = YES;
+                [_mraidInterstitialViewController loadHTML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] baseURL:baseURL];
             } else {
                 [self interstitialViewControllerDidFail];
             }
@@ -46,15 +55,19 @@
     }
 }
 
+#pragma mark - MNMRAIDInterstitialViewControllerDelegate
+
 - (void)interstitialViewControllerDidLoad
 {
+    _adReady = YES;
+
     if ([_delegate respondsToSelector:@selector(rewardableDidLoad:)]) {
         [_delegate rewardableDidLoad:self];
     }
 }
 - (void)interstitialViewControllerDidFail
 {
-    _adLoaded = NO;
+    _mraidInterstitialViewController = nil;
 
     if ([_delegate respondsToSelector:@selector(rewardableDidFail:)]) {
         [_delegate rewardableDidFail:self];
@@ -70,11 +83,11 @@
 
 - (void)interstitialViewControllerWillDismiss
 {
-    _adLoaded = NO;
-
     if ([_delegate respondsToSelector:@selector(rewardableWillDismiss:)]) {
         [_delegate rewardableWillDismiss:self];
     }
+
+    _mraidInterstitialViewController = nil;
 }
 
 - (void)interstitialViewControllerCommand:(NSString *)command arguments:(NSDictionary *)arguments
@@ -97,10 +110,8 @@
 
 - (void)showAdFromViewController:(UIViewController *)viewController
 {
-    if (_adLoaded) {
+    if (_mraidInterstitialViewController) {
         [_mraidInterstitialViewController showFromViewController:viewController];
-
-        [[[_mraidInterstitialViewController mraidView] webView] setNeedsLayout];
     }
 }
 

@@ -1,7 +1,6 @@
 #import "MNAdClient.h"
 #import "AFNetworking.h"
-#import <AdSupport/ASIdentifierManager.h>
-#import <sys/sysctl.h>
+#import "MNDevice.h"
 
 #define MN_ENDPOINT "http://ads.mnectar.com/m/v1/ad"
 
@@ -27,23 +26,57 @@
     return self;
 }
 
+
+
 - (NSURL *)adURL
 {
-    size_t size;
-    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char *machine = malloc(size);
-    sysctlbyname("hw.machine", machine, &size, NULL, 0);
-    NSString *deviceName = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
-    free(machine);
+    NSString *adUnitId = _adUnitId;
 
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    // &cn=0&sc_a=2.0&ct=0&av=3.7.0&v=1&nv=1.0.0
-    NSMutableString *url = [NSMutableString stringWithFormat:@"%@?mr=1&frq=0&trg=0", @MN_ENDPOINT];
-    [url appendFormat:@"&udid=ifa%%3A%@", [[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    [url appendFormat:@"&dnt=%d", [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled] ? 0 : 1];
+    NSString *udid = [[MNDevice sharedManager] udid];
+    NSString *dnt = [[MNDevice sharedManager] dnt] ? @"1" : @"0";
+
+    NSString *deviceName = [[MNDevice sharedManager] deviceName];
+
+    NSString *connectionType = [[MNDevice sharedManager] connectionType];
+
+    NSString *carrierName = nil;
+    NSString *isoCountryCode = nil;
+
+    NSString *mobileNetworkCode = nil;
+    NSString *mobileCountryCode = nil;
+    
+    NSString *screenWidth = [NSString stringWithFormat:@"%.0f", [[MNDevice sharedManager] screenSize].width];
+    NSString *screenHeight = [NSString stringWithFormat:@"%.0f", [[MNDevice sharedManager] screenSize].height];
+    NSString *screenScale = [NSString stringWithFormat:@"%.1f", [[MNDevice sharedManager] screenScale]];
+    NSString *screenOrientation = [[MNDevice sharedManager] screenOrientation];
+
+    NSString *applicationBundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *applicationVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+
+    NSString *timeZone = [[MNDevice sharedManager] timeZone];
+    NSString *location = nil;
+
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@?mr=1", @MN_ENDPOINT];
+
+    [url appendFormat:@"&id=%@", [adUnitId stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+    [url appendFormat:@"&udid=ifa%%3A%@", [udid stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [url appendFormat:@"&dnt=%@", [dnt stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
     [url appendFormat:@"&dn=%@", [deviceName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    [url appendFormat:@"&o=%@", UIInterfaceOrientationIsPortrait(orientation) ? @"p" : @"l"];
-    [url appendFormat:@"&id=%@", [_adUnitId stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+    [url appendFormat:@"&ct=%@", [connectionType stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+    [url appendFormat:@"&w=%@", [screenWidth stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [url appendFormat:@"&h=%@", [screenHeight stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [url appendFormat:@"&sc=%@", [screenScale stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [url appendFormat:@"&o=%@", [screenOrientation stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+    [url appendFormat:@"&bundle=%@", [applicationBundleIdentifier stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [url appendFormat:@"&av=%@", [applicationVersion stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+    [url appendFormat:@"&z=%@", [timeZone stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
     [url appendFormat:@"&%u", arc4random()];
 
     return [NSURL URLWithString:url];
@@ -55,6 +88,7 @@
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", [url scheme], [url host]]];
 
     NSMutableURLRequest *request = [[_requestManager requestSerializer] requestWithMethod:@"GET" URLString:[url absoluteString] parameters:nil error:nil];
+    [request setValue:[[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] forHTTPHeaderField:@"User-Agent"];
 
     AFHTTPRequestOperation *operation = [_requestManager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, NSData *data) {
         NSError *error = nil;

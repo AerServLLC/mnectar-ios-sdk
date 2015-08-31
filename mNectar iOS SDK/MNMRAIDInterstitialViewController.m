@@ -12,7 +12,7 @@
 
 @implementation MNMRAIDInterstitialViewController
 
-- (instancetype)initWithHTML:(NSString *)html baseURL:(NSURL *)baseURL
+- (instancetype)init
 {
     if (self = [super init]) {
         _orientation = [[UIApplication sharedApplication] statusBarOrientation];
@@ -24,17 +24,24 @@
         [_mraidView setDelegate:self];
         [self setView:_mraidView];
 
-        [[_mraidView webView] loadHTMLString:html baseURL:baseURL];
-
         _requestManager = [AFHTTPRequestOperationManager manager];
         [_requestManager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     }
-    
+
     return self;
+}
+
+- (void)loadHTML:(NSString *)html baseURL:(NSURL *)baseURL
+{
+    [[_mraidView webView] loadHTMLString:html baseURL:baseURL];
 }
 
 - (void)showFromViewController:(UIViewController *)viewController
 {
+    if ([self isBeingPresented] || [[self view] window]) {
+        return;
+    }
+
     if ([_delegate respondsToSelector:@selector(interstitialViewControllerWillAppear)]) {
         [_delegate interstitialViewControllerWillAppear];
     }
@@ -61,8 +68,6 @@
 
 - (void)mraidDidLoad
 {
-    [_mraidView expand:nil];
-
     if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidLoad)]) {
         [_delegate interstitialViewControllerDidLoad];
     }
@@ -82,6 +87,20 @@
     }
 
     [self dismissViewControllerAnimated:NO completion:^{}];
+}
+
+- (void)mraidShouldReorient
+{
+    UIViewController *presentingViewController = [self presentingViewController];
+
+    if (presentingViewController) {
+        __weak UIViewController *weakSelf = self;
+
+        [self dismissViewControllerAnimated:NO completion:^{
+            [presentingViewController presentViewController:weakSelf animated:NO completion:^{
+            }];
+        }];
+    }
 }
 
 - (void)mraidShouldOpen:(NSURL *)url
@@ -157,6 +176,7 @@
         [_delegate interstitialViewControllerCommand:command arguments:arguments];
     }
 }
+
 #pragma mark - UIViewController
 
 - (BOOL)prefersStatusBarHidden
@@ -166,6 +186,8 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
+    UIInterfaceOrientationMask orientationMask = UIInterfaceOrientationMaskAll;
+
     MNMRAIDOrientation forceOrientation = [_mraidView forceOrientation];
     NSArray *supportedInterfaceOrientations = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UISupportedInterfaceOrientations"];
 
@@ -174,33 +196,26 @@
         BOOL portraitUpsideDownSupported = [supportedInterfaceOrientations containsObject:@"UIInterfaceOrientationPortraitUpsideDown"];
 
         if (portraitSupported && portraitUpsideDownSupported) {
-            NSLog(@"p + pu");
-            return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+            orientationMask = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
         } else if (portraitSupported) {
-            NSLog(@"p");
-            return UIInterfaceOrientationMaskPortrait;
+            orientationMask = UIInterfaceOrientationMaskPortrait;
         } else if (portraitUpsideDownSupported) {
-            NSLog(@"pu");
-            return UIInterfaceOrientationMaskPortraitUpsideDown;
+            orientationMask = UIInterfaceOrientationMaskPortraitUpsideDown;
         }
     } else if ((forceOrientation == MNMRAIDOrientationLandscape) || (![_mraidView allowOrientationChange] && UIInterfaceOrientationIsLandscape(_orientation) && forceOrientation == MNMRAIDOrientationNone)) {
         BOOL landscapeLeftSupported = [supportedInterfaceOrientations containsObject:@"UIInterfaceOrientationLandscapeLeft"];
         BOOL landscapeRightSupported = [supportedInterfaceOrientations containsObject:@"UIInterfaceOrientationLandscapeRight"];
 
         if (landscapeLeftSupported && landscapeRightSupported) {
-            NSLog(@"ll + lr");
-            return UIInterfaceOrientationMaskLandscape;
+            orientationMask = UIInterfaceOrientationMaskLandscape;
         } else if (landscapeLeftSupported) {
-            NSLog(@"ll");
-            return UIInterfaceOrientationMaskLandscapeLeft;
+            orientationMask = UIInterfaceOrientationMaskLandscapeLeft;
         } else if (landscapeRightSupported) {
-            NSLog(@"lr");
-            return UIInterfaceOrientationMaskLandscapeRight;
+            orientationMask = UIInterfaceOrientationMaskLandscapeRight;
         }
     }
 
-    NSLog(@"all");
-    return UIInterfaceOrientationMaskAll;
+    return orientationMask;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -214,8 +229,8 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {} completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [UIView setAnimationsEnabled:animationsEnabled];
 
-        [_mraidView setDefaultPosition:[_mraidView frame]];
-        [_mraidView setCurrentPosition:[_mraidView frame]];
+        [_mraidView setMaxSize:[_mraidView frame].size];
+        [_mraidView setScreenSize:[_mraidView frame].size];
         [_mraidView fireSizeChange];
     }];
 }

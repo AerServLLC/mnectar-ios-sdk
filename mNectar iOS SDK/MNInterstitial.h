@@ -15,6 +15,9 @@
 @interface MNInterstitial : NSObject
 
 @property (nonatomic, weak) id<MNInterstitialDelegate> delegate;
+@property (nonatomic, assign, readonly, getter=isAdReady) BOOL adReady;
+
++ (instancetype)interstitialForAdUnitId:(NSString *)adUnitId;
 
 - (instancetype)initWithAdUnitId:(NSString *)adUnitId;
 

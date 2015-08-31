@@ -35,6 +35,8 @@ typedef enum {
 @optional
 - (void)mraidDidLoad;
 - (void)mraidDidFail;
+
+- (void)mraidShouldReorient;
 - (void)mraidShouldExpand:(NSURL *)url;
 - (void)mraidShouldResize;
 - (void)mraidShouldClose;
@@ -76,8 +78,10 @@ typedef enum {
 - (instancetype)initWithFrame:(CGRect)frame;
 
 - (NSString *)inject:(NSString *)js;
+- (void)updateCloseButton;
 - (void)startLoading;
 - (void)stopLoading;
+- (void)dispatchOrientationChange;
 
 - (void)fireReady;
 - (void)fireError:(NSString *)message action:(NSString *)action;

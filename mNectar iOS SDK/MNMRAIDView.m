@@ -57,7 +57,7 @@
 
         CGRect screen = [[UIScreen mainScreen] bounds];
 
-        [self inject:[[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MNMRAID.bundle/mraid.js" ofType:nil] encoding:NSUTF8StringEncoding error:nil]];
+        [self inject:[[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MNMRAID.bundle/mraidjs" ofType:nil] encoding:NSUTF8StringEncoding error:nil]];
         [self setState:MNMRAIDStateLoading];
         [self setPlacementType:MNMRAIDPlacementTypeInline];
         [self setIsViewable:NO];

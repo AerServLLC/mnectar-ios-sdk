@@ -71,6 +71,8 @@ static NSMutableDictionary *interstitials = nil;
 }
 - (void)interstitialViewControllerDidFail
 {
+    _adReady = NO;
+
     _mraidInterstitialViewController = nil;
 
     if ([_delegate respondsToSelector:@selector(interstitialDidFail:)]) {
@@ -87,6 +89,8 @@ static NSMutableDictionary *interstitials = nil;
 
 - (void)interstitialViewControllerWillDismiss
 {
+    _adReady = NO;
+
     if ([_delegate respondsToSelector:@selector(interstitialWillDismiss:)]) {
         [_delegate interstitialWillDismiss:self];
     }

@@ -71,6 +71,8 @@ static NSMutableDictionary *rewardables = nil;
 }
 - (void)interstitialViewControllerDidFail
 {
+    _adReady = NO;
+
     _mraidInterstitialViewController = nil;
 
     if ([_delegate respondsToSelector:@selector(rewardableDidFail:)]) {
@@ -87,6 +89,8 @@ static NSMutableDictionary *rewardables = nil;
 
 - (void)interstitialViewControllerWillDismiss
 {
+    _adReady = NO;
+
     if ([_delegate respondsToSelector:@selector(rewardableWillDismiss:)]) {
         [_delegate rewardableWillDismiss:self];
     }

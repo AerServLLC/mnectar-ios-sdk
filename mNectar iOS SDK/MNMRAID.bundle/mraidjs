@@ -1,5 +1,4 @@
-
-//(function (external) {
+(function (external) {
     var mraid = window.mraid = {};
 
     mraid._call = function (command) {
@@ -357,8 +356,4 @@
     mraid.createCalendarEvent = function () {};
 
     mraid.playVideo = function () {};
-//})(window);
-
-//console.log = function () {
-//    mraid._call("log?m=" + encodeURIComponent(Array.prototype.slice.call(arguments).join(' ')));
-//};
+})(window);

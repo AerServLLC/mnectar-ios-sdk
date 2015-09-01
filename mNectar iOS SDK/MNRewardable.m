@@ -1,3 +1,7 @@
+//
+//  Copyright (c) 2015 mNectar, Inc  all rights reserved
+//
+
 #import "MNRewardable.h"
 #import "MNMRAIDInterstitialViewController.h"
 #import "MNAdClient.h"

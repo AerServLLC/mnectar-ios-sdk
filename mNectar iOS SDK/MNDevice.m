@@ -1,3 +1,7 @@
+//
+//  Copyright (c) 2015 mNectar, Inc  all rights reserved
+//
+
 #import "MNDevice.h"
 #import <AdSupport/ASIdentifierManager.h>
 #import <sys/sysctl.h>

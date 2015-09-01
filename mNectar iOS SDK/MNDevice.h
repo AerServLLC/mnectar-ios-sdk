@@ -1,3 +1,7 @@
+//
+//  Copyright (c) 2015 mNectar, Inc  all rights reserved
+//
+
 #import <UIKit/UIKit.h>
 
 @interface MNDevice : NSObject

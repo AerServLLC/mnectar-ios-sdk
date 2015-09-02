@@ -1,7 +1,3 @@
-//
-//  Copyright (c) 2015 mNectar, Inc  all rights reserved
-//
-
 #import "MNMRAIDBrowserViewController.h"
 
 #define MN_NAV_HEIGHT 45

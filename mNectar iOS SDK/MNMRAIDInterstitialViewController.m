@@ -1,7 +1,3 @@
-//
-//  Copyright (c) 2015 mNectar, Inc  all rights reserved
-//
-
 #import "MNMRAIDInterstitialViewController.h"
 #import "AFNetworking.h"
 #import "MNMRAIDBrowserViewController.h"

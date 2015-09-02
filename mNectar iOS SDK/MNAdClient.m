@@ -1,7 +1,3 @@
-//
-//  Copyright (c) 2015 mNectar, Inc  all rights reserved
-//
-
 #import "MNAdClient.h"
 #import "AFNetworking.h"
 #import "MNDevice.h"

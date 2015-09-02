@@ -1,7 +1,3 @@
-//
-//  Copyright (c) 2015 mNectar, Inc  all rights reserved
-//
-
 #import "MNMRAIDView.h"
 
 #define MN_IMG_CLOSE_NORMAL "MNMRAID.bundle/cancel"

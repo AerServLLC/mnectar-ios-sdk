@@ -1,8 +1,7 @@
 #import "MNAdClient.h"
+#import "MNConstants.h"
 #import "AFNetworking.h"
 #import "MNDevice.h"
-
-#define MN_ENDPOINT "http://ads.mnectar.com/m/v1/ad"
 
 NSString *URLEncodedString(NSString *string) {
     return (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
@@ -50,7 +49,7 @@ NSString *URLEncodedString(NSString *string) {
     NSString *timeZone = [[MNDevice sharedDevice] timeZone];
     NSString *location = [[MNDevice sharedDevice] location];
 
-    NSMutableString *url = [NSMutableString stringWithFormat:@"%@?mr=1", @MN_ENDPOINT];
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@?v=%@&mr=1", @MN_ENDPOINT, @MN_VERSION];
     [url appendFormat:@"&id=%@", URLEncodedString(adUnitId)];
     [url appendFormat:@"&udid=%@", URLEncodedString(udid)];
     [url appendFormat:@"&dnt=%@", URLEncodedString(dnt)];

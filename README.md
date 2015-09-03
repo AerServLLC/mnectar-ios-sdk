@@ -1,1 +1,0 @@
-# mnectar-ios-sdk

@@ -83,6 +83,13 @@ static NSMutableDictionary *interstitials = nil;
     }
 }
 
+- (void)interstitialViewControllerDidAppear
+{
+    if ([_delegate respondsToSelector:@selector(interstitialDidAppear:)]) {
+        [_delegate interstitialDidAppear:self];
+    }
+}
+
 - (void)interstitialViewControllerWillDismiss
 {
     _adReady = NO;
@@ -92,6 +99,13 @@ static NSMutableDictionary *interstitials = nil;
     }
 
     _mraidInterstitialViewController = nil;
+}
+
+- (void)interstitialViewControllerDidDismiss
+{
+    if ([_delegate respondsToSelector:@selector(interstitialDidDismiss:)]) {
+        [_delegate interstitialDidDismiss:self];
+    }
 }
 
 - (void)showAdFromViewController:(UIViewController *)viewController

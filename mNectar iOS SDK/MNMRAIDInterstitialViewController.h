@@ -9,7 +9,9 @@
 - (void)interstitialViewControllerDidLoad;
 - (void)interstitialViewControllerDidFail;
 - (void)interstitialViewControllerWillAppear;
+- (void)interstitialViewControllerDidAppear;
 - (void)interstitialViewControllerWillDismiss;
+- (void)interstitialViewControllerDidDismiss;
 - (void)interstitialViewControllerCommand:(NSString *)command arguments:(NSDictionary *)arguments;
 
 @end

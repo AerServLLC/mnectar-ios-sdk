@@ -9,7 +9,9 @@
 - (void)rewardableDidLoad:(MNRewardable *)rewardable;
 - (void)rewardableDidFail:(MNRewardable *)rewardable;
 - (void)rewardableWillAppear:(MNRewardable *)rewardable;
+- (void)rewardableDidAppear:(MNRewardable *)rewardable;
 - (void)rewardableWillDismiss:(MNRewardable *)rewardable;
+- (void)rewardableDidDismiss:(MNRewardable *)rewardable;
 - (void)rewardableShouldRewardUser:(MNRewardable *)rewardable reward:(MNReward *)reward;
 
 @end

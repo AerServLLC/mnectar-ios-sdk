@@ -8,7 +8,9 @@
 - (void)interstitialDidLoad:(MNInterstitial *)interstitial;
 - (void)interstitialDidFail:(MNInterstitial *)interstitial;
 - (void)interstitialWillAppear:(MNInterstitial *)interstitial;
+- (void)interstitialDidAppear:(MNInterstitial *)interstitial;
 - (void)interstitialWillDismiss:(MNInterstitial *)interstitial;
+- (void)interstitialDidDismiss:(MNInterstitial *)interstitial;
 
 @end
 

@@ -51,6 +51,10 @@
             [_mraidView setIsViewable:YES];
         }];
     }
+    
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidAppear)]) {
+        [_delegate interstitialViewControllerDidAppear];
+    }
 }
 
 - (void)show
@@ -87,6 +91,10 @@
     }
 
     [self dismissViewControllerAnimated:NO completion:^{}];
+    
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidDismiss)]) {
+        [_delegate interstitialViewControllerDidDismiss];
+    }
 }
 
 - (void)mraidShouldReorient

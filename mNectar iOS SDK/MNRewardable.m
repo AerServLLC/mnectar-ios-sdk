@@ -83,6 +83,13 @@ static NSMutableDictionary *rewardables = nil;
     }
 }
 
+- (void)interstitialViewControllerDidAppear
+{
+    if ([_delegate respondsToSelector:@selector(rewardableDidAppear:)]) {
+        [_delegate rewardableDidAppear:self];
+    }
+}
+
 - (void)interstitialViewControllerWillDismiss
 {
     _adReady = NO;
@@ -92,6 +99,13 @@ static NSMutableDictionary *rewardables = nil;
     }
 
     _mraidInterstitialViewController = nil;
+}
+
+- (void)interstitialViewControllerDidDismiss
+{
+    if ([_delegate respondsToSelector:@selector(rewardableDidDismiss:)]) {
+        [_delegate rewardableDidDismiss:self];
+    }
 }
 
 - (void)interstitialViewControllerCommand:(NSString *)command arguments:(NSDictionary *)arguments

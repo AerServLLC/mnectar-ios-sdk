@@ -34,9 +34,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="minigame_controller.png" translatesAutoresizingMaskIntoConstraints="NO" id="U9s-WP-gmT">
+                                <rect key="frame" x="16" y="116" width="43" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="gAE-CO-uN4"/>
+                                    <constraint firstAttribute="width" constant="43" id="hAb-Ln-Q6L"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r7l-d7-nEC">
-                                <rect key="frame" x="262" y="116" width="77" height="30"/>
-                                <state key="normal" title="Load Ad">
+                                <rect key="frame" x="67" y="116" width="77" height="30"/>
+                                <state key="normal" title="Load Mini-Game">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="disabled" title="Loading..."/>
@@ -60,7 +67,10 @@
                             <constraint firstAttribute="centerX" secondItem="Wf0-Y4-Yfi" secondAttribute="centerX" id="LKe-f9-X1t"/>
                             <constraint firstItem="r7l-d7-nEC" firstAttribute="leading" secondItem="7uB-nS-QLU" secondAttribute="trailing" constant="8" id="V1Z-gl-R3y"/>
                             <constraint firstItem="Cl9-6j-qUE" firstAttribute="top" secondItem="Wf0-Y4-Yfi" secondAttribute="bottom" constant="8" id="Xxs-1j-sNe"/>
+                            <constraint firstItem="r7l-d7-nEC" firstAttribute="leading" secondItem="U9s-WP-gmT" secondAttribute="trailing" constant="8" id="cKz-pz-ahJ"/>
                             <constraint firstItem="r7l-d7-nEC" firstAttribute="top" secondItem="7uB-nS-QLU" secondAttribute="bottom" constant="8" id="d31-iu-2Jj"/>
+                            <constraint firstItem="U9s-WP-gmT" firstAttribute="top" secondItem="7uB-nS-QLU" secondAttribute="bottom" constant="8" id="j7j-nE-psi"/>
+                            <constraint firstItem="U9s-WP-gmT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="mEM-ze-cWG"/>
                             <constraint firstItem="Cl9-6j-qUE" firstAttribute="top" secondItem="Wf0-Y4-Yfi" secondAttribute="bottom" constant="33" id="sz5-hA-otO"/>
                             <constraint firstAttribute="centerX" secondItem="r7l-d7-nEC" secondAttribute="centerX" id="tZE-ID-Ccg"/>
                             <constraint firstItem="7uB-nS-QLU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ufv-vf-eFt"/>
@@ -70,11 +80,13 @@
                             <mask key="constraints">
                                 <exclude reference="4bh-Vr-wRF"/>
                                 <exclude reference="ufv-vf-eFt"/>
-                                <exclude reference="sz5-hA-otO"/>
-                                <exclude reference="CEN-eS-yFX"/>
                                 <exclude reference="Hlt-be-ci2"/>
                                 <exclude reference="Ikz-Y2-TLP"/>
                                 <exclude reference="V1Z-gl-R3y"/>
+                                <exclude reference="d31-iu-2Jj"/>
+                                <exclude reference="tZE-ID-Ccg"/>
+                                <exclude reference="sz5-hA-otO"/>
+                                <exclude reference="CEN-eS-yFX"/>
                             </mask>
                         </variation>
                     </view>
@@ -87,4 +99,7 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="minigame_controller.png" width="95" height="70"/>
+    </resources>
 </document>

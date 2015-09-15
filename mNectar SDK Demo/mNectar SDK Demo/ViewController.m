@@ -50,14 +50,14 @@
 - (void)rewardableDidLoad:(MNRewardable *)rewardable;
 {
     [self.button setEnabled:true];
-    [self.button setTitle:@"Show Ad" forState:UIControlStateNormal];
-    [self.button setTitle:@"Showing..." forState:UIControlStateDisabled];
+    [self.button setTitle:@"Play Mini-Game" forState:UIControlStateNormal];
+    [self.button setTitle:@"Playing..." forState:UIControlStateDisabled];
     self.loaded=true;
 }
 - (void)rewardableDidFail:(MNRewardable *)rewardable
 {
     [self.button setEnabled:true];
-    [self.button setTitle:@"Load Ad" forState:UIControlStateNormal];
+    [self.button setTitle:@"Load Mini-Game" forState:UIControlStateNormal];
     [self.button setTitle:@"Loading..." forState:UIControlStateDisabled];
 }
 - (void)rewardableWillAppear:(MNRewardable *)rewardable
@@ -71,7 +71,7 @@
 - (void)rewardableWillDismiss:(MNRewardable *)rewardable
 {
     [self.button setEnabled:true];
-    [self.button setTitle:@"Load Ad" forState:UIControlStateNormal];
+    [self.button setTitle:@"Load Mini-Game" forState:UIControlStateNormal];
     [self.button setTitle:@"Loading..." forState:UIControlStateDisabled];
 }
 - (void)rewardableDidDismiss:(MNRewardable *)rewardable

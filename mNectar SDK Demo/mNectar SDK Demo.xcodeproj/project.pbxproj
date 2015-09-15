@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C14D5BF1BA8A02F006F18FB /* minigame_controller.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C14D5BE1BA8A02F006F18FB /* minigame_controller.png */; };
 		3CB9740F1BA88FAE00A159D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9740E1BA88FAE00A159D4 /* main.m */; };
 		3CB974121BA88FAE00A159D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974111BA88FAE00A159D4 /* AppDelegate.m */; };
 		3CB974151BA88FAE00A159D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974141BA88FAE00A159D4 /* ViewController.m */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C14D5BE1BA8A02F006F18FB /* minigame_controller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minigame_controller.png; sourceTree = "<group>"; };
 		3CB974091BA88FAE00A159D4 /* mNectar SDK Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mNectar SDK Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CB9740D1BA88FAE00A159D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3CB9740E1BA88FAE00A159D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		3CB9740C1BA88FAE00A159D4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3C14D5BE1BA8A02F006F18FB /* minigame_controller.png */,
 				3CB9740D1BA88FAE00A159D4 /* Info.plist */,
 				3CB9740E1BA88FAE00A159D4 /* main.m */,
 			);
@@ -305,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CB974181BA88FAE00A159D4 /* Main.storyboard in Resources */,
+				3C14D5BF1BA8A02F006F18FB /* minigame_controller.png in Resources */,
 				3CB9741D1BA88FAE00A159D4 /* LaunchScreen.xib in Resources */,
 				3CB974461BA8903000A159D4 /* MNMRAID.bundle in Resources */,
 				3CB9741A1BA88FAE00A159D4 /* Images.xcassets in Resources */,
@@ -540,6 +544,7 @@
 				3CB9742E1BA88FAF00A159D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3CB9742F1BA88FAF00A159D4 /* Build configuration list for PBXNativeTarget "mNectar SDK DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -548,6 +553,7 @@
 				3CB974311BA88FAF00A159D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

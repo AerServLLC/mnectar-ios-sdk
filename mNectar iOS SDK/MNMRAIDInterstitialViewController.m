@@ -7,6 +7,7 @@
 
 @property (nonatomic, assign) UIInterfaceOrientation orientation;
 @property (nonatomic, strong) AFHTTPRequestOperationManager *requestManager;
+@property (nonatomic, assign) BOOL currentAnimationEnabled;
 
 @end
 
@@ -146,16 +147,16 @@
                 [productViewController setDelegate:self];
                 [productViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:[[path lastPathComponent] substringFromIndex:2]} completionBlock:^(BOOL result, NSError *error) {
                     if (!error) {
-                        BOOL animationsEnabled = [UIView areAnimationsEnabled];
+                        _currentAnimationEnabled = [UIView areAnimationsEnabled];
 
                         [UIView setAnimationsEnabled:NO];
 
                         if ([self isViewLoaded] && [[self view] window]) {
                             [self presentViewController:productViewController animated:NO completion:^{
-                                [UIView setAnimationsEnabled:animationsEnabled];
+                                [UIView setAnimationsEnabled:_currentAnimationEnabled];
                             }];
                         } else {
-                            [UIView setAnimationsEnabled:animationsEnabled];
+                            [UIView setAnimationsEnabled:_currentAnimationEnabled];
                         }
                     } else {
                         [_mraidView stopLoading];
@@ -230,12 +231,12 @@
 {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-    BOOL animationsEnabled = [UIView areAnimationsEnabled];
+    _currentAnimationEnabled = [UIView areAnimationsEnabled];
 
     [UIView setAnimationsEnabled:NO];
 
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {} completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [UIView setAnimationsEnabled:animationsEnabled];
+        [UIView setAnimationsEnabled:_currentAnimationEnabled];
 
         [_mraidView setMaxSize:[_mraidView frame].size];
         [_mraidView setScreenSize:[_mraidView frame].size];
@@ -243,16 +244,44 @@
     }];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    _currentAnimationEnabled = [UIView areAnimationsEnabled];
+
+    [UIView setAnimationsEnabled:NO];
+
+    CGSize size = [[UIScreen mainScreen] bounds].size;
+
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation) && size.width > size.height) {
+        size = CGSizeMake(size.height, size.width);
+    } else if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && size.height > size.width) {
+        size = CGSizeMake(size.height, size.width);
+    }
+
+    [_mraidView setFrame:CGRectMake(0, 0, size.width, size.height)];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [UIView setAnimationsEnabled:_currentAnimationEnabled];
+
+    CGSize size = [_mraidView frame].size;
+
+    [_mraidView setMaxSize:size];
+    [_mraidView setScreenSize:size];
+    [_mraidView fireSizeChange];
+}
+
 #pragma mark - SKStoreProductViewControllerDelegate
 
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController
 {
-    BOOL animationsEnabled = [UIView areAnimationsEnabled];
+    _currentAnimationEnabled = [UIView areAnimationsEnabled];
 
     [UIView setAnimationsEnabled:NO];
 
     [viewController dismissViewControllerAnimated:NO completion:^{
-        [UIView setAnimationsEnabled:animationsEnabled];
+        [UIView setAnimationsEnabled:_currentAnimationEnabled];
     }];
 
     [_mraidView stopLoading];

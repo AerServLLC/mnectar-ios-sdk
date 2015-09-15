@@ -1,0 +1,8 @@
+1.0 (2015-09-10)
+================
+* initial release
+
+1.1 (2015-09-15)
+================
+* added sdk demo project
+* fix iOS 7 orientation issues

@@ -6,3 +6,7 @@
 ================
 * added sdk demo project
 * fix iOS 7 orientation issues
+
+1.2 (2015-09-15)
+================
+* use https for ad requests

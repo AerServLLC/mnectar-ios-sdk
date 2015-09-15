@@ -49,7 +49,7 @@ NSString *URLEncodedString(NSString *string) {
     NSString *timeZone = [[MNDevice sharedDevice] timeZone];
     NSString *location = [[MNDevice sharedDevice] location];
 
-    NSMutableString *url = [NSMutableString stringWithFormat:@"%@?v=%@&mr=1", @MN_ENDPOINT, @MN_VERSION];
+    NSMutableString *url = [NSMutableString stringWithFormat:@"%@://%@?v=%@&mr=1&trg=0&frq=0", MN_USE_HTTPS ? @"https" : @"http", @MN_ENDPOINT, @MN_VERSION];
     [url appendFormat:@"&id=%@", URLEncodedString(adUnitId)];
     [url appendFormat:@"&udid=%@", URLEncodedString(udid)];
     [url appendFormat:@"&dnt=%@", URLEncodedString(dnt)];

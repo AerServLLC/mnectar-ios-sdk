@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mNectar Demo App" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wf0-Y4-Yfi">
+                                <rect key="frame" x="224" y="20" width="153" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your Ad Unit Below" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cl9-6j-qUE">
+                                <rect key="frame" x="203" y="49" width="194" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ad Unit" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7uB-nS-QLU">
+                                <rect key="frame" x="16" y="78" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r7l-d7-nEC">
+                                <rect key="frame" x="262" y="116" width="77" height="30"/>
+                                <state key="normal" title="Load Ad">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" title="Loading..."/>
+                                <connections>
+                                    <action selector="buttonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="owW-LX-A74"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7uB-nS-QLU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="1pF-5W-RDB"/>
+                            <constraint firstAttribute="centerX" secondItem="7uB-nS-QLU" secondAttribute="centerX" id="4bh-Vr-wRF"/>
+                            <constraint firstItem="Wf0-Y4-Yfi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="96h-ya-1cD"/>
+                            <constraint firstAttribute="centerX" secondItem="Cl9-6j-qUE" secondAttribute="centerX" id="9RA-4w-Vwq"/>
+                            <constraint firstAttribute="centerX" secondItem="7uB-nS-QLU" secondAttribute="centerX" id="C3l-V4-gYC"/>
+                            <constraint firstItem="Wf0-Y4-Yfi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="CEN-eS-yFX"/>
+                            <constraint firstItem="r7l-d7-nEC" firstAttribute="top" secondItem="7uB-nS-QLU" secondAttribute="bottom" constant="8" id="DxI-ik-xQw"/>
+                            <constraint firstItem="r7l-d7-nEC" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Hlt-be-ci2"/>
+                            <constraint firstItem="7uB-nS-QLU" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="I1C-YA-reM"/>
+                            <constraint firstItem="r7l-d7-nEC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="58" id="Ikz-Y2-TLP"/>
+                            <constraint firstAttribute="centerX" secondItem="Wf0-Y4-Yfi" secondAttribute="centerX" id="LKe-f9-X1t"/>
+                            <constraint firstItem="r7l-d7-nEC" firstAttribute="leading" secondItem="7uB-nS-QLU" secondAttribute="trailing" constant="8" id="V1Z-gl-R3y"/>
+                            <constraint firstItem="Cl9-6j-qUE" firstAttribute="top" secondItem="Wf0-Y4-Yfi" secondAttribute="bottom" constant="8" id="Xxs-1j-sNe"/>
+                            <constraint firstItem="r7l-d7-nEC" firstAttribute="top" secondItem="7uB-nS-QLU" secondAttribute="bottom" constant="8" id="d31-iu-2Jj"/>
+                            <constraint firstItem="Cl9-6j-qUE" firstAttribute="top" secondItem="Wf0-Y4-Yfi" secondAttribute="bottom" constant="33" id="sz5-hA-otO"/>
+                            <constraint firstAttribute="centerX" secondItem="r7l-d7-nEC" secondAttribute="centerX" id="tZE-ID-Ccg"/>
+                            <constraint firstItem="7uB-nS-QLU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ufv-vf-eFt"/>
+                            <constraint firstItem="7uB-nS-QLU" firstAttribute="top" secondItem="Cl9-6j-qUE" secondAttribute="bottom" constant="8" id="y4y-yY-VZN"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="4bh-Vr-wRF"/>
+                                <exclude reference="ufv-vf-eFt"/>
+                                <exclude reference="sz5-hA-otO"/>
+                                <exclude reference="CEN-eS-yFX"/>
+                                <exclude reference="Hlt-be-ci2"/>
+                                <exclude reference="Ikz-Y2-TLP"/>
+                                <exclude reference="V1Z-gl-R3y"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="adUnitField" destination="7uB-nS-QLU" id="bGt-bg-giK"/>
+                        <outlet property="button" destination="r7l-d7-nEC" id="eHk-dE-Cb4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

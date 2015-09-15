@@ -1,0 +1,555 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3CB9740F1BA88FAE00A159D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9740E1BA88FAE00A159D4 /* main.m */; };
+		3CB974121BA88FAE00A159D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974111BA88FAE00A159D4 /* AppDelegate.m */; };
+		3CB974151BA88FAE00A159D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974141BA88FAE00A159D4 /* ViewController.m */; };
+		3CB974181BA88FAE00A159D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CB974161BA88FAE00A159D4 /* Main.storyboard */; };
+		3CB9741A1BA88FAE00A159D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CB974191BA88FAE00A159D4 /* Images.xcassets */; };
+		3CB9741D1BA88FAE00A159D4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB9741B1BA88FAE00A159D4 /* LaunchScreen.xib */; };
+		3CB974291BA88FAE00A159D4 /* mNectar_SDK_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974281BA88FAE00A159D4 /* mNectar_SDK_DemoTests.m */; };
+		3CB974431BA8903000A159D4 /* MNAdClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974341BA8903000A159D4 /* MNAdClient.m */; };
+		3CB974441BA8903000A159D4 /* MNDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974371BA8903000A159D4 /* MNDevice.m */; };
+		3CB974451BA8903000A159D4 /* MNInterstitial.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974391BA8903000A159D4 /* MNInterstitial.m */; };
+		3CB974461BA8903000A159D4 /* MNMRAID.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3CB9743A1BA8903000A159D4 /* MNMRAID.bundle */; };
+		3CB974471BA8903000A159D4 /* MNMRAIDBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9743C1BA8903000A159D4 /* MNMRAIDBrowserViewController.m */; };
+		3CB974481BA8903000A159D4 /* MNMRAIDInterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9743E1BA8903000A159D4 /* MNMRAIDInterstitialViewController.m */; };
+		3CB974491BA8903000A159D4 /* MNMRAIDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974401BA8903000A159D4 /* MNMRAIDView.m */; };
+		3CB9744A1BA8903000A159D4 /* MNRewardable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974421BA8903000A159D4 /* MNRewardable.m */; };
+		3CB9745F1BA8903A00A159D4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9744D1BA8903900A159D4 /* AFHTTPRequestOperation.m */; };
+		3CB974601BA8903A00A159D4 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9744F1BA8903900A159D4 /* AFHTTPRequestOperationManager.m */; };
+		3CB974611BA8903A00A159D4 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974511BA8903900A159D4 /* AFHTTPSessionManager.m */; };
+		3CB974621BA8903A00A159D4 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974541BA8903A00A159D4 /* AFNetworkReachabilityManager.m */; };
+		3CB974631BA8903A00A159D4 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974561BA8903A00A159D4 /* AFSecurityPolicy.m */; };
+		3CB974641BA8903A00A159D4 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974581BA8903A00A159D4 /* AFURLConnectionOperation.m */; };
+		3CB974651BA8903A00A159D4 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9745A1BA8903A00A159D4 /* AFURLRequestSerialization.m */; };
+		3CB974661BA8903A00A159D4 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9745C1BA8903A00A159D4 /* AFURLResponseSerialization.m */; };
+		3CB974671BA8903A00A159D4 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9745E1BA8903A00A159D4 /* AFURLSessionManager.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3CB974231BA88FAE00A159D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CB974011BA88FAE00A159D4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CB974081BA88FAE00A159D4;
+			remoteInfo = "mNectar SDK Demo";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3CB974091BA88FAE00A159D4 /* mNectar SDK Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mNectar SDK Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CB9740D1BA88FAE00A159D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CB9740E1BA88FAE00A159D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3CB974101BA88FAE00A159D4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3CB974111BA88FAE00A159D4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3CB974131BA88FAE00A159D4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		3CB974141BA88FAE00A159D4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3CB974171BA88FAE00A159D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3CB974191BA88FAE00A159D4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3CB9741C1BA88FAE00A159D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		3CB974221BA88FAE00A159D4 /* mNectar SDK DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mNectar SDK DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CB974271BA88FAE00A159D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CB974281BA88FAE00A159D4 /* mNectar_SDK_DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mNectar_SDK_DemoTests.m; sourceTree = "<group>"; };
+		3CB974331BA8903000A159D4 /* MNAdClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNAdClient.h; sourceTree = "<group>"; };
+		3CB974341BA8903000A159D4 /* MNAdClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNAdClient.m; sourceTree = "<group>"; };
+		3CB974351BA8903000A159D4 /* MNConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNConstants.h; sourceTree = "<group>"; };
+		3CB974361BA8903000A159D4 /* MNDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNDevice.h; sourceTree = "<group>"; };
+		3CB974371BA8903000A159D4 /* MNDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNDevice.m; sourceTree = "<group>"; };
+		3CB974381BA8903000A159D4 /* MNInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNInterstitial.h; sourceTree = "<group>"; };
+		3CB974391BA8903000A159D4 /* MNInterstitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNInterstitial.m; sourceTree = "<group>"; };
+		3CB9743A1BA8903000A159D4 /* MNMRAID.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MNMRAID.bundle; sourceTree = "<group>"; };
+		3CB9743B1BA8903000A159D4 /* MNMRAIDBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMRAIDBrowserViewController.h; sourceTree = "<group>"; };
+		3CB9743C1BA8903000A159D4 /* MNMRAIDBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMRAIDBrowserViewController.m; sourceTree = "<group>"; };
+		3CB9743D1BA8903000A159D4 /* MNMRAIDInterstitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMRAIDInterstitialViewController.h; sourceTree = "<group>"; };
+		3CB9743E1BA8903000A159D4 /* MNMRAIDInterstitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMRAIDInterstitialViewController.m; sourceTree = "<group>"; };
+		3CB9743F1BA8903000A159D4 /* MNMRAIDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMRAIDView.h; sourceTree = "<group>"; };
+		3CB974401BA8903000A159D4 /* MNMRAIDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMRAIDView.m; sourceTree = "<group>"; };
+		3CB974411BA8903000A159D4 /* MNRewardable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNRewardable.h; sourceTree = "<group>"; };
+		3CB974421BA8903000A159D4 /* MNRewardable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNRewardable.m; sourceTree = "<group>"; };
+		3CB9744C1BA8903900A159D4 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		3CB9744D1BA8903900A159D4 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		3CB9744E1BA8903900A159D4 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
+		3CB9744F1BA8903900A159D4 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
+		3CB974501BA8903900A159D4 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		3CB974511BA8903900A159D4 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		3CB974521BA8903900A159D4 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		3CB974531BA8903A00A159D4 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		3CB974541BA8903A00A159D4 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		3CB974551BA8903A00A159D4 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		3CB974561BA8903A00A159D4 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		3CB974571BA8903A00A159D4 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		3CB974581BA8903A00A159D4 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		3CB974591BA8903A00A159D4 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		3CB9745A1BA8903A00A159D4 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		3CB9745B1BA8903A00A159D4 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		3CB9745C1BA8903A00A159D4 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		3CB9745D1BA8903A00A159D4 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		3CB9745E1BA8903A00A159D4 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3CB974061BA88FAE00A159D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CB9741F1BA88FAE00A159D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3CB974001BA88FAE00A159D4 = {
+			isa = PBXGroup;
+			children = (
+				3CB9744B1BA8903900A159D4 /* AFNetworking */,
+				3CB974321BA8903000A159D4 /* mNectar iOS SDK */,
+				3CB9740B1BA88FAE00A159D4 /* mNectar SDK Demo */,
+				3CB974251BA88FAE00A159D4 /* mNectar SDK DemoTests */,
+				3CB9740A1BA88FAE00A159D4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3CB9740A1BA88FAE00A159D4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3CB974091BA88FAE00A159D4 /* mNectar SDK Demo.app */,
+				3CB974221BA88FAE00A159D4 /* mNectar SDK DemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3CB9740B1BA88FAE00A159D4 /* mNectar SDK Demo */ = {
+			isa = PBXGroup;
+			children = (
+				3CB974101BA88FAE00A159D4 /* AppDelegate.h */,
+				3CB974111BA88FAE00A159D4 /* AppDelegate.m */,
+				3CB974131BA88FAE00A159D4 /* ViewController.h */,
+				3CB974141BA88FAE00A159D4 /* ViewController.m */,
+				3CB974161BA88FAE00A159D4 /* Main.storyboard */,
+				3CB974191BA88FAE00A159D4 /* Images.xcassets */,
+				3CB9741B1BA88FAE00A159D4 /* LaunchScreen.xib */,
+				3CB9740C1BA88FAE00A159D4 /* Supporting Files */,
+			);
+			path = "mNectar SDK Demo";
+			sourceTree = "<group>";
+		};
+		3CB9740C1BA88FAE00A159D4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3CB9740D1BA88FAE00A159D4 /* Info.plist */,
+				3CB9740E1BA88FAE00A159D4 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3CB974251BA88FAE00A159D4 /* mNectar SDK DemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				3CB974281BA88FAE00A159D4 /* mNectar_SDK_DemoTests.m */,
+				3CB974261BA88FAE00A159D4 /* Supporting Files */,
+			);
+			path = "mNectar SDK DemoTests";
+			sourceTree = "<group>";
+		};
+		3CB974261BA88FAE00A159D4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3CB974271BA88FAE00A159D4 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3CB974321BA8903000A159D4 /* mNectar iOS SDK */ = {
+			isa = PBXGroup;
+			children = (
+				3CB974331BA8903000A159D4 /* MNAdClient.h */,
+				3CB974341BA8903000A159D4 /* MNAdClient.m */,
+				3CB974351BA8903000A159D4 /* MNConstants.h */,
+				3CB974361BA8903000A159D4 /* MNDevice.h */,
+				3CB974371BA8903000A159D4 /* MNDevice.m */,
+				3CB974381BA8903000A159D4 /* MNInterstitial.h */,
+				3CB974391BA8903000A159D4 /* MNInterstitial.m */,
+				3CB9743A1BA8903000A159D4 /* MNMRAID.bundle */,
+				3CB9743B1BA8903000A159D4 /* MNMRAIDBrowserViewController.h */,
+				3CB9743C1BA8903000A159D4 /* MNMRAIDBrowserViewController.m */,
+				3CB9743D1BA8903000A159D4 /* MNMRAIDInterstitialViewController.h */,
+				3CB9743E1BA8903000A159D4 /* MNMRAIDInterstitialViewController.m */,
+				3CB9743F1BA8903000A159D4 /* MNMRAIDView.h */,
+				3CB974401BA8903000A159D4 /* MNMRAIDView.m */,
+				3CB974411BA8903000A159D4 /* MNRewardable.h */,
+				3CB974421BA8903000A159D4 /* MNRewardable.m */,
+			);
+			name = "mNectar iOS SDK";
+			path = "../mNectar iOS SDK";
+			sourceTree = "<group>";
+		};
+		3CB9744B1BA8903900A159D4 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				3CB9744C1BA8903900A159D4 /* AFHTTPRequestOperation.h */,
+				3CB9744D1BA8903900A159D4 /* AFHTTPRequestOperation.m */,
+				3CB9744E1BA8903900A159D4 /* AFHTTPRequestOperationManager.h */,
+				3CB9744F1BA8903900A159D4 /* AFHTTPRequestOperationManager.m */,
+				3CB974501BA8903900A159D4 /* AFHTTPSessionManager.h */,
+				3CB974511BA8903900A159D4 /* AFHTTPSessionManager.m */,
+				3CB974521BA8903900A159D4 /* AFNetworking.h */,
+				3CB974531BA8903A00A159D4 /* AFNetworkReachabilityManager.h */,
+				3CB974541BA8903A00A159D4 /* AFNetworkReachabilityManager.m */,
+				3CB974551BA8903A00A159D4 /* AFSecurityPolicy.h */,
+				3CB974561BA8903A00A159D4 /* AFSecurityPolicy.m */,
+				3CB974571BA8903A00A159D4 /* AFURLConnectionOperation.h */,
+				3CB974581BA8903A00A159D4 /* AFURLConnectionOperation.m */,
+				3CB974591BA8903A00A159D4 /* AFURLRequestSerialization.h */,
+				3CB9745A1BA8903A00A159D4 /* AFURLRequestSerialization.m */,
+				3CB9745B1BA8903A00A159D4 /* AFURLResponseSerialization.h */,
+				3CB9745C1BA8903A00A159D4 /* AFURLResponseSerialization.m */,
+				3CB9745D1BA8903A00A159D4 /* AFURLSessionManager.h */,
+				3CB9745E1BA8903A00A159D4 /* AFURLSessionManager.m */,
+			);
+			name = AFNetworking;
+			path = ../AFNetworking;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3CB974081BA88FAE00A159D4 /* mNectar SDK Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CB9742C1BA88FAF00A159D4 /* Build configuration list for PBXNativeTarget "mNectar SDK Demo" */;
+			buildPhases = (
+				3CB974051BA88FAE00A159D4 /* Sources */,
+				3CB974061BA88FAE00A159D4 /* Frameworks */,
+				3CB974071BA88FAE00A159D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "mNectar SDK Demo";
+			productName = "mNectar SDK Demo";
+			productReference = 3CB974091BA88FAE00A159D4 /* mNectar SDK Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3CB974211BA88FAE00A159D4 /* mNectar SDK DemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CB9742F1BA88FAF00A159D4 /* Build configuration list for PBXNativeTarget "mNectar SDK DemoTests" */;
+			buildPhases = (
+				3CB9741E1BA88FAE00A159D4 /* Sources */,
+				3CB9741F1BA88FAE00A159D4 /* Frameworks */,
+				3CB974201BA88FAE00A159D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3CB974241BA88FAE00A159D4 /* PBXTargetDependency */,
+			);
+			name = "mNectar SDK DemoTests";
+			productName = "mNectar SDK DemoTests";
+			productReference = 3CB974221BA88FAE00A159D4 /* mNectar SDK DemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3CB974011BA88FAE00A159D4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = mNectar;
+				TargetAttributes = {
+					3CB974081BA88FAE00A159D4 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					3CB974211BA88FAE00A159D4 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = 3CB974081BA88FAE00A159D4;
+					};
+				};
+			};
+			buildConfigurationList = 3CB974041BA88FAE00A159D4 /* Build configuration list for PBXProject "mNectar SDK Demo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3CB974001BA88FAE00A159D4;
+			productRefGroup = 3CB9740A1BA88FAE00A159D4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3CB974081BA88FAE00A159D4 /* mNectar SDK Demo */,
+				3CB974211BA88FAE00A159D4 /* mNectar SDK DemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3CB974071BA88FAE00A159D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CB974181BA88FAE00A159D4 /* Main.storyboard in Resources */,
+				3CB9741D1BA88FAE00A159D4 /* LaunchScreen.xib in Resources */,
+				3CB974461BA8903000A159D4 /* MNMRAID.bundle in Resources */,
+				3CB9741A1BA88FAE00A159D4 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CB974201BA88FAE00A159D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3CB974051BA88FAE00A159D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CB974641BA8903A00A159D4 /* AFURLConnectionOperation.m in Sources */,
+				3CB974151BA88FAE00A159D4 /* ViewController.m in Sources */,
+				3CB974631BA8903A00A159D4 /* AFSecurityPolicy.m in Sources */,
+				3CB974491BA8903000A159D4 /* MNMRAIDView.m in Sources */,
+				3CB974601BA8903A00A159D4 /* AFHTTPRequestOperationManager.m in Sources */,
+				3CB974481BA8903000A159D4 /* MNMRAIDInterstitialViewController.m in Sources */,
+				3CB974471BA8903000A159D4 /* MNMRAIDBrowserViewController.m in Sources */,
+				3CB974121BA88FAE00A159D4 /* AppDelegate.m in Sources */,
+				3CB974451BA8903000A159D4 /* MNInterstitial.m in Sources */,
+				3CB974431BA8903000A159D4 /* MNAdClient.m in Sources */,
+				3CB974671BA8903A00A159D4 /* AFURLSessionManager.m in Sources */,
+				3CB974661BA8903A00A159D4 /* AFURLResponseSerialization.m in Sources */,
+				3CB974441BA8903000A159D4 /* MNDevice.m in Sources */,
+				3CB9740F1BA88FAE00A159D4 /* main.m in Sources */,
+				3CB974651BA8903A00A159D4 /* AFURLRequestSerialization.m in Sources */,
+				3CB974621BA8903A00A159D4 /* AFNetworkReachabilityManager.m in Sources */,
+				3CB9744A1BA8903000A159D4 /* MNRewardable.m in Sources */,
+				3CB9745F1BA8903A00A159D4 /* AFHTTPRequestOperation.m in Sources */,
+				3CB974611BA8903A00A159D4 /* AFHTTPSessionManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CB9741E1BA88FAE00A159D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CB974291BA88FAE00A159D4 /* mNectar_SDK_DemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3CB974241BA88FAE00A159D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CB974081BA88FAE00A159D4 /* mNectar SDK Demo */;
+			targetProxy = 3CB974231BA88FAE00A159D4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3CB974161BA88FAE00A159D4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CB974171BA88FAE00A159D4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3CB9741B1BA88FAE00A159D4 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3CB9741C1BA88FAE00A159D4 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3CB9742A1BA88FAE00A159D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3CB9742B1BA88FAE00A159D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3CB9742D1BA88FAF00A159D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "mNectar SDK Demo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3CB9742E1BA88FAF00A159D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "mNectar SDK Demo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3CB974301BA88FAF00A159D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "mNectar SDK DemoTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mNectar SDK Demo.app/mNectar SDK Demo";
+			};
+			name = Debug;
+		};
+		3CB974311BA88FAF00A159D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "mNectar SDK DemoTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mNectar SDK Demo.app/mNectar SDK Demo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3CB974041BA88FAE00A159D4 /* Build configuration list for PBXProject "mNectar SDK Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CB9742A1BA88FAE00A159D4 /* Debug */,
+				3CB9742B1BA88FAE00A159D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CB9742C1BA88FAF00A159D4 /* Build configuration list for PBXNativeTarget "mNectar SDK Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CB9742D1BA88FAF00A159D4 /* Debug */,
+				3CB9742E1BA88FAF00A159D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		3CB9742F1BA88FAF00A159D4 /* Build configuration list for PBXNativeTarget "mNectar SDK DemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CB974301BA88FAF00A159D4 /* Debug */,
+				3CB974311BA88FAF00A159D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3CB974011BA88FAE00A159D4 /* Project object */;
+}

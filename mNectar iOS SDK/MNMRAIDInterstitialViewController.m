@@ -3,6 +3,19 @@
 #import "MNMRAIDBrowserViewController.h"
 #import <StoreKit/StoreKit.h>
 
+@interface MNSKStoreProductViewController : SKStoreProductViewController
+
+@end
+
+@implementation MNSKStoreProductViewController
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+@end
+
 @interface MNMRAIDInterstitialViewController () <MNMRAIDViewDelegate, SKStoreProductViewControllerDelegate>
 
 @property (nonatomic, assign) UIInterfaceOrientation orientation;
@@ -142,7 +155,7 @@
 
         if ([scheme isEqualToString:@"itms"] || [scheme isEqualToString:@"itms-apps"] || [host isEqualToString:@"itunes.apple.com"]) {
             if ([[path lastPathComponent] hasPrefix:@"id"]) {
-                SKStoreProductViewController *productViewController = [[SKStoreProductViewController alloc] init];
+                SKStoreProductViewController *productViewController = [[MNSKStoreProductViewController alloc] init];
 
                 [productViewController setDelegate:self];
                 [productViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:[[path lastPathComponent] substringFromIndex:2]} completionBlock:^(BOOL result, NSError *error) {
@@ -288,3 +301,4 @@
 }
 
 @end
+

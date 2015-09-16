@@ -10,3 +10,8 @@
 1.2 (2015-09-15)
 ================
 * use https for ad requests
+
+1.3 (2015-09-16)
+================
+* fix for landscape storekit
+

@@ -7,5 +7,5 @@
 #endif
 
 #ifndef MN_VERSION
-#define MN_VERSION "1.3"
+#define MN_VERSION "1.4"
 #endif

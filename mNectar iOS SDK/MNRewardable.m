@@ -85,6 +85,8 @@ static NSMutableDictionary *rewardables = nil;
 
 - (void)interstitialViewControllerDidAppear
 {
+    [_adClient logImpression];
+
     if ([_delegate respondsToSelector:@selector(rewardableDidAppear:)]) {
         [_delegate rewardableDidAppear:self];
     }

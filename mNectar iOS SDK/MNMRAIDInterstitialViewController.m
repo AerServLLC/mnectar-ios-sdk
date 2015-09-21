@@ -1,5 +1,5 @@
 #import "MNMRAIDInterstitialViewController.h"
-#import "AFNetworking.h"
+#import "AF2Networking.h"
 #import "MNMRAIDBrowserViewController.h"
 #import <StoreKit/StoreKit.h>
 
@@ -19,7 +19,7 @@
 @interface MNMRAIDInterstitialViewController () <MNMRAIDViewDelegate, SKStoreProductViewControllerDelegate>
 
 @property (nonatomic, assign) UIInterfaceOrientation orientation;
-@property (nonatomic, strong) AFHTTPRequestOperationManager *requestManager;
+@property (nonatomic, strong) AF2HTTPRequestOperationManager *requestManager;
 @property (nonatomic, assign) BOOL currentAnimationEnabled;
 
 @end
@@ -38,8 +38,8 @@
         [_mraidView setDelegate:self];
         [self setView:_mraidView];
 
-        _requestManager = [AFHTTPRequestOperationManager manager];
-        [_requestManager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+        _requestManager = [AF2HTTPRequestOperationManager manager];
+        [_requestManager setResponseSerializer:[AF2HTTPResponseSerializer serializer]];
     }
 
     return self;
@@ -129,9 +129,11 @@
 {
     [_mraidView startLoading];
 
+    NSLog(@"mnectar: opening %@", url);
+
     NSMutableURLRequest *request = [[_requestManager requestSerializer] requestWithMethod:@"GET" URLString:[url absoluteString] parameters:nil error:nil];
 
-    AFHTTPRequestOperation *operation = [_requestManager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, NSData *data) {
+    AF2HTTPRequestOperation *operation = [_requestManager HTTPRequestOperationWithRequest:request success:^(AF2HTTPRequestOperation *operation, NSData *data) {
         MNMRAIDBrowserViewController *browserViewController = [[MNMRAIDBrowserViewController alloc] init];
         [[browserViewController webView] loadRequest:[operation request]];
 
@@ -140,7 +142,7 @@
         }
 
         [_mraidView stopLoading];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(AF2HTTPRequestOperation *operation, NSError *error) {
         if ([[operation response] statusCode] != 302) {
             [_mraidView stopLoading];
         }
@@ -148,6 +150,8 @@
 
     [operation setRedirectResponseBlock:^NSURLRequest *(NSURLConnection *connection, NSURLRequest *request, NSURLResponse *response) {
         NSURL *url = [request URL];
+
+        NSLog(@"mnectar: redirecting %@", url);
 
         NSString *scheme = [url scheme];
         NSString *host = [url host];

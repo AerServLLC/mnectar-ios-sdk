@@ -85,6 +85,8 @@ static NSMutableDictionary *interstitials = nil;
 
 - (void)interstitialViewControllerDidAppear
 {
+    [_adClient logImpression];
+
     if ([_delegate respondsToSelector:@selector(interstitialDidAppear:)]) {
         [_delegate interstitialDidAppear:self];
     }

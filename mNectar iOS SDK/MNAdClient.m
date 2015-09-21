@@ -1,6 +1,6 @@
 #import "MNAdClient.h"
 #import "MNConstants.h"
-#import "AFNetworking.h"
+#import "AF2Networking.h"
 #import "MNDevice.h"
 
 NSString *URLEncodedString(NSString *string) {
@@ -9,7 +9,7 @@ NSString *URLEncodedString(NSString *string) {
 
 @interface MNAdClient ()
 
-@property(nonatomic, strong) AFHTTPRequestOperationManager *requestManager;
+@property(nonatomic, strong) AF2HTTPRequestOperationManager *requestManager;
 @property(nonatomic, strong) NSString *adUnitId;
 @property(nonatomic, strong) NSURL *impressionURL;
 
@@ -20,8 +20,8 @@ NSString *URLEncodedString(NSString *string) {
 - (instancetype)initWithAdUnitId:(NSString *)adUnitId
 {
     if (self = [super init]) {
-        _requestManager = [AFHTTPRequestOperationManager manager];
-        [_requestManager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+        _requestManager = [AF2HTTPRequestOperationManager manager];
+        [_requestManager setResponseSerializer:[AF2HTTPResponseSerializer serializer]];
 
         _adUnitId = adUnitId;
     }
@@ -69,8 +69,6 @@ NSString *URLEncodedString(NSString *string) {
     [url appendFormat:@"&ll=%@", URLEncodedString(location)];
     [url appendFormat:@"&%u", arc4random()];
 
-    NSLog(@"%@", url);
-
     return [NSURL URLWithString:url];
 }
 
@@ -79,10 +77,12 @@ NSString *URLEncodedString(NSString *string) {
     NSURL *url = [self adURL];
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", [url scheme], [url host]]];
 
+    NSLog(@"mnectar: requesting ad %@", url);
+
     NSMutableURLRequest *request = [[_requestManager requestSerializer] requestWithMethod:@"GET" URLString:[url absoluteString] parameters:nil error:nil];
     [request setValue:[[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] forHTTPHeaderField:@"User-Agent"];
 
-    AFHTTPRequestOperation *operation = [_requestManager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, NSData *data) {
+    AF2HTTPRequestOperation *operation = [_requestManager HTTPRequestOperationWithRequest:request success:^(AF2HTTPRequestOperation *operation, NSData *data) {
         NSError *error = nil;
         NSDictionary *headers = [[operation response] allHeaderFields];
 
@@ -93,7 +93,7 @@ NSString *URLEncodedString(NSString *string) {
         }
 
         handler(baseURL, [[operation response] statusCode], headers, data, error);
-    } failure:^(AFHTTPRequestOperation * operation, NSError *error) {
+    } failure:^(AF2HTTPRequestOperation * operation, NSError *error) {
         if ([[operation response] statusCode] != 302) {
             handler(baseURL, [[operation response] statusCode], [[operation response] allHeaderFields], nil, error);
         }
@@ -109,10 +109,12 @@ NSString *URLEncodedString(NSString *string) {
 - (void)logImpression
 {
     if (_impressionURL) {
+        NSLog(@"mnectar: logging impression %@", _impressionURL);
+
         NSMutableURLRequest *request = [[_requestManager requestSerializer] requestWithMethod:@"GET" URLString:[_impressionURL absoluteString] parameters:nil error:nil];
 
-        AFHTTPRequestOperation *operation = [_requestManager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, NSData *data) {
-        } failure:^(AFHTTPRequestOperation * operation, NSError *error) {
+        AF2HTTPRequestOperation *operation = [_requestManager HTTPRequestOperationWithRequest:request success:^(AF2HTTPRequestOperation *operation, NSData *data) {
+        } failure:^(AF2HTTPRequestOperation * operation, NSError *error) {
         }];
 
         [operation setRedirectResponseBlock:^NSURLRequest *(NSURLConnection *connection, NSURLRequest *request, NSURLResponse *response) {

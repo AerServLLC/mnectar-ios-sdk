@@ -1,7 +1,7 @@
 #import "MNDevice.h"
 #import <AdSupport/ASIdentifierManager.h>
 #import <sys/sysctl.h>
-#import "AFNetworking.h"
+#import "AF2Networking.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 #import <CoreLocation/CoreLocation.h>
@@ -38,7 +38,7 @@ static MNDevice *sharedDevice = nil;
             [_locationManager startMonitoringSignificantLocationChanges];
         }
 
-        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+        [[AF2NetworkReachabilityManager sharedManager] startMonitoring];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
@@ -74,7 +74,7 @@ static MNDevice *sharedDevice = nil;
 
 - (NSString *)connectionType
 {
-    return [[AFNetworkReachabilityManager sharedManager] isReachableViaWiFi] ? @"2" : @"3";
+    return [[AF2NetworkReachabilityManager sharedManager] isReachableViaWiFi] ? @"2" : @"3";
 }
 
 - (NSString *)wwanCarrierName
@@ -145,14 +145,14 @@ static MNDevice *sharedDevice = nil;
         [_locationManager startMonitoringSignificantLocationChanges];
     }
 
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [[AF2NetworkReachabilityManager sharedManager] startMonitoring];
 }
 
 - (void)willResignActive:(NSNotification *)notification
 {
     [_locationManager stopMonitoringSignificantLocationChanges];
 
-    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+    [[AF2NetworkReachabilityManager sharedManager] stopMonitoring];
 }
 
 @end

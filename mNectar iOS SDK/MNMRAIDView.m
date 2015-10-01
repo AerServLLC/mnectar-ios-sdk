@@ -9,21 +9,6 @@
 
 @implementation MNMRAIDView
 
-@synthesize placementType = _placementType;
-@synthesize isViewable = _isViewable;
-@synthesize expandWidth = _expandWidth;
-@synthesize expandHeight = _expandHeight;
-@synthesize useCustomClose = _useCustomClose;
-@synthesize allowOrientationChange = _allowOrientationChange;
-@synthesize forceOrientation = _forceOrientation;
-@synthesize resizeWidth = _resizeWidth;
-@synthesize resizeHeight = _resizeHeight;
-@synthesize resizeOffsetX = _resizeOffsetX;
-@synthesize resizeOffsetY = _resizeOffsetY;
-@synthesize customClosePosition = _customClosePosition;
-@synthesize allowOffscreen = _allowOffscreen;
-@synthesize supportsInlineVideo = _supportsInlineVideo;
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
@@ -57,15 +42,11 @@
         [self setState:MNMRAIDStateLoading];
         [self setPlacementType:MNMRAIDPlacementTypeInline];
         [self setIsViewable:NO];
-        [self setExpandWidth:screen.size.width];
-        [self setExpandHeight:screen.size.height];
+        [self setExpandSize:screen.size];
         [self setUseCustomClose:NO];
         [self setAllowOrientationChange:YES];
         [self setForceOrientation:MNMRAIDOrientationNone];
-        [self setResizeWidth:frame.size.width];
-        [self setResizeHeight:frame.size.height];
-        [self setResizeOffsetX:0];
-        [self setResizeOffsetY:0];
+        [self setResizePosition:screen];
         [self setCustomClosePosition:MNMRAIDPositionTopRight];
         [self setAllowOffscreen:YES];
         [self setCurrentPosition:frame];
@@ -163,16 +144,16 @@
         [self updateCloseButton];
         [self dispatchOrientationChange];
 
-        if ([_delegate respondsToSelector:@selector(mraidDidLoad)]) {
-            [_delegate mraidDidLoad];
+        if ([_delegate respondsToSelector:@selector(mraidDidLoad:)]) {
+            [_delegate mraidDidLoad:self];
         }
     }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    if ([_delegate respondsToSelector:@selector(mraidDidFail)]) {
-        [_delegate mraidDidFail];
+    if ([_delegate respondsToSelector:@selector(mraidDidFail:)]) {
+        [_delegate mraidDidFail:self];
     }
 }
 
@@ -199,22 +180,90 @@
             }
         }
 
-        if ([command isEqualToString:@"orientation"]) {
-            if ([_delegate respondsToSelector:@selector(mraidShouldReorient)]) {
-                [_delegate mraidShouldReorient];
+        if ([command isEqualToString:@"expandProperties"]) {
+            NSNumber *width = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"width"]];
+            NSNumber *height = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"height"]];
+
+            if (width && height) {
+                _expandSize = CGSizeMake([width floatValue], [height floatValue]);
             }
-        } else if ([command isEqualToString:@"usecustomclose"]) {
+
+            NSString *useCustomClose = arguments[@"useCustomClose"];
+
+            if (useCustomClose && [useCustomClose isEqualToString:@"true"]) {
+                _useCustomClose = YES;
+            } else if (useCustomClose && [useCustomClose isEqualToString:@"false"]) {
+                _useCustomClose = NO;
+            }
+
             [self updateCloseButton];
-        } else if ([command isEqualToString:@"resize"]) {
-            [self resize];
         } else if ([command isEqualToString:@"expand"]) {
             [self expand:[NSURL URLWithString:arguments[@"url"]]];
+        } else if ([command isEqualToString:@"orientationProperties"]) {
+            NSString *allowOrientationChange = arguments[@"allowOrientationChange"];
+
+            if (allowOrientationChange && [allowOrientationChange isEqualToString:@"true"]) {
+                _allowOrientationChange = YES;
+            } else if (allowOrientationChange && [allowOrientationChange isEqualToString:@"false"]) {
+                _allowOrientationChange = NO;
+            }
+
+            NSString *forceOrientation = arguments[@"forceOrientation"];
+
+            if ([forceOrientation isEqualToString:@"portrait"]) {
+                _forceOrientation = MNMRAIDOrientationPortrait;
+            } else if ([forceOrientation isEqualToString:@"landscape"]) {
+                _forceOrientation = MNMRAIDOrientationLandscape;
+            } else if ([forceOrientation isEqualToString:@"none"]) {
+                _forceOrientation = MNMRAIDOrientationNone;
+            }
+
+            if ([_delegate respondsToSelector:@selector(mraidShouldReorient:)]) {
+                [_delegate mraidShouldReorient:self];
+            }
+        } else if ([command isEqualToString:@"resizeProperties"]) {
+            NSNumber *offsetX = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"offsetX"]];
+            NSNumber *offsetY = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"offsetY"]];
+            NSNumber *width = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"width"]];
+            NSNumber *height = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"height"]];
+
+            if (offsetX && offsetY && width && height) {
+                _resizePosition = CGRectMake([offsetX floatValue], [offsetY floatValue], [width floatValue], [height floatValue]);
+            }
+
+            NSString *customClosePosition = arguments[@"customClosePosition"];
+
+            if (![customClosePosition isEqualToString:@"top-left"] && ![customClosePosition isEqualToString:@"top-right"] && ![customClosePosition isEqualToString:@"bottom-left"] && ![customClosePosition isEqualToString:@"bottom-right"] && ![customClosePosition isEqualToString:@"top-center"] && ![customClosePosition isEqualToString:@"bottom-center"]) {
+                [self setCustomClosePosition:_customClosePosition];
+            } else if ([customClosePosition isEqualToString:@"top-left"]) {
+                _customClosePosition = MNMRAIDPositionTopLeft;
+            } else if ([customClosePosition isEqualToString:@"top-right"]) {
+                _customClosePosition = MNMRAIDPositionTopRight;
+            } else if ([customClosePosition isEqualToString:@"bottom-left"]) {
+                _customClosePosition = MNMRAIDPositionBottomLeft;
+            } else if ([customClosePosition isEqualToString:@"bottom-right"]) {
+                _customClosePosition = MNMRAIDPositionBottomRight;
+            } else if ([customClosePosition isEqualToString:@"top-center"]) {
+                _customClosePosition = MNMRAIDPositionTopCenter;
+            } else if ([customClosePosition isEqualToString:@"bottom-center"]) {
+                _customClosePosition = MNMRAIDPositionBottomCenter;
+            }
+
+            NSString *allowOffscreen = arguments[@"allowOffscreen"];
+
+            if (allowOffscreen && [allowOffscreen isEqualToString:@"true"]) {
+                _allowOffscreen = YES;
+            } else if (allowOffscreen && [allowOffscreen isEqualToString:@"false"]) {
+                _allowOffscreen = NO;
+            }
+        } else if ([command isEqualToString:@"resize"]) {
+            [self resize];
         } else if ([command isEqualToString:@"close"]) {
             [self close];
         } else if ([command isEqualToString:@"open"]) {
             [self open:[NSURL URLWithString:arguments[@"url"]]];
         } else if ([command isEqualToString:@"log"]) {
-            NSLog(@"%@", arguments[@"m"]);
+            NSLog(@"%@", arguments[@"message"]);
         } else {
             [self command:command arguments:arguments];
         }
@@ -233,27 +282,18 @@
 
 - (void)command:(NSString *)command arguments:(NSDictionary *)arguments
 {
-    if ([_delegate respondsToSelector:@selector(mraidCommand:arguments:)]) {
-        [_delegate mraidCommand:command arguments:arguments];
+    if ([_delegate respondsToSelector:@selector(mraidBridge:command:arguments:)]) {
+        [_delegate mraidBridge:self command:command arguments:arguments];
     }
 }
 
 - (void)setState:(MNMRAIDState)state
 {
-    [self inject:[NSString stringWithFormat:@"mraid._setState(\"%@\");true;", stringFromState(state)]];
+    [self inject:[NSString stringWithFormat:@"mraid._setState(\"%@\");", stringFromState(state)]];
 
     _state = state;
 
     [self fireStateChange];
-}
-
-- (void)setIsViewable:(BOOL)isViewable
-{
-    [self inject:[NSString stringWithFormat:@"mraid._setIsViewable(%@);true;", isViewable ? @"true" : @"false"]];
-
-    _isViewable = isViewable;
-
-    [self fireViewableChange];
 }
 
 - (void)setPlacementType:(MNMRAIDPlacementType)placementType
@@ -263,10 +303,19 @@
     _placementType = placementType;
 }
 
+- (void)setIsViewable:(BOOL)isViewable
+{
+    [self inject:[NSString stringWithFormat:@"mraid._setIsViewable(%@);", isViewable ? @"true" : @"false"]];
+
+    _isViewable = isViewable;
+
+    [self fireViewableChange];
+}
+
 - (void)open:(NSURL *)url
 {
-    if ([_delegate respondsToSelector:@selector(mraidShouldOpen:)]) {
-        [_delegate mraidShouldOpen:url];
+    if ([_delegate respondsToSelector:@selector(mraidShouldOpen:url:)]) {
+        [_delegate mraidShouldOpen:self url:url];
     }
 }
 
@@ -275,65 +324,17 @@
     if (_state == MNMRAIDStateDefault || _state == MNMRAIDStateResized) {
         [self setState:MNMRAIDStateExpanded];
 
-        if ([_delegate respondsToSelector:@selector(mraidShouldExpand:)]) {
-            [_delegate mraidShouldExpand:url];
+        if ([_delegate respondsToSelector:@selector(mraidShouldExpand:url:)]) {
+            [_delegate mraidShouldExpand:self url:url];
         }
     }
 }
 
-- (long)expandWidth
+- (void)setExpandSize:(CGSize)expandSize
 {
-    NSNumber *expandWidth = [[[NSNumberFormatter alloc] init] numberFromString:[self inject:@"mraid._getExpandPropertyWidth();"]];
+    [self inject:[NSString stringWithFormat:@"mraid._setExpandSize(%.0f, %.0f);", expandSize.width, expandSize.height]];
 
-    if (expandWidth) {
-        _expandWidth = [expandWidth longValue];
-    } else {
-        [self setExpandWidth:_expandWidth];
-    }
-
-    return _expandWidth;
-}
-
-- (void)setExpandWidth:(long)expandWidth
-{
-    [self inject:[NSString stringWithFormat:@"mraid._setExpandPropertyWidth(%li);", expandWidth]];
-
-    _expandWidth = expandWidth;
-}
-
-- (long)expandHeight
-{
-    NSNumber *expandHeight = [[[NSNumberFormatter alloc] init] numberFromString:[self inject:@"mraid._getExpandPropertyHeight();"]];
-
-    if (expandHeight) {
-        _expandWidth = [expandHeight longValue];
-    } else {
-        [self setExpandHeight:_expandHeight];
-    }
-
-    return _expandHeight;
-}
-
-- (void)setExpandHeight:(long)expandHeight
-{
-    [self inject:[NSString stringWithFormat:@"mraid._setExpandPropertyHeight(%li);", expandHeight]];
-
-    _expandHeight = expandHeight;
-}
-
-- (BOOL)useCustomClose
-{
-    NSString *useCustomClose = [self inject:@"mraid._getExpandPropertyUseCustomClose();"];
-
-    if (![useCustomClose isEqualToString:@"true"] && ![useCustomClose isEqualToString:@"false"]) {
-        [self setUseCustomClose:_useCustomClose];
-    } else if ([useCustomClose isEqualToString:@"true"]) {
-        _useCustomClose = YES;
-    } else if ([useCustomClose isEqualToString:@"false"]) {
-        _useCustomClose = NO;
-    }
-
-    return _useCustomClose;
+    _expandSize = expandSize;
 }
 
 - (void)setUseCustomClose:(BOOL)useCustomClose
@@ -343,21 +344,6 @@
     _useCustomClose = useCustomClose;
 }
 
-- (BOOL)allowOrientationChange
-{
-    NSString *allowOrientationChange = [self inject:@"mraid._getOrientationPropertyAllowOrientationChange();"];
-
-    if (![allowOrientationChange isEqualToString:@"true"] && ![allowOrientationChange isEqualToString:@"false"]) {
-        [self setAllowOrientationChange:_allowOrientationChange];
-    } else if ([allowOrientationChange isEqualToString:@"true"]) {
-        _allowOrientationChange = YES;
-    } else if ([allowOrientationChange isEqualToString:@"false"]) {
-        _allowOrientationChange = NO;
-    }
-
-    return _allowOrientationChange;
-}
-
 - (void)setAllowOrientationChange:(BOOL)allowOrientationChange
 {
     [self inject:[NSString stringWithFormat:@"mraid._setOrientationPropertyAllowOrientationChange(%@);", allowOrientationChange ? @"true" : @"false"]];
@@ -365,145 +351,32 @@
     _allowOrientationChange = allowOrientationChange;
 }
 
-- (MNMRAIDOrientation)forceOrientation
+- (void)setForceOrientation:(MNMRAIDOrientation)forceOrientation
 {
-    NSString *orientation = [self inject:@"mraid._getOrientationPropertyForceOrientation();"];
+    [self inject:[NSString stringWithFormat:@"mraid._setOrientationPropertyForceOrientation(\"%@\");", stringFromOrientation(forceOrientation)]];
 
-    if (![orientation isEqualToString:@"portrait"] && ![orientation isEqualToString:@"landscape"] && ![orientation isEqualToString:@"none"]) {
-        [self setForceOrientation:_forceOrientation];
-    } else if ([orientation isEqualToString:@"portrait"]) {
-        _forceOrientation = MNMRAIDOrientationPortrait;
-    } else if ([orientation isEqualToString:@"landscape"]) {
-        _forceOrientation = MNMRAIDOrientationLandscape;
-    } else if ([orientation isEqualToString:@"none"]) {
-        _forceOrientation = MNMRAIDOrientationNone;
-    }
-
-    return _forceOrientation;
-}
-
-- (void)setForceOrientation:(MNMRAIDOrientation)orientation
-{
-    [self inject:[NSString stringWithFormat:@"mraid._setOrientationPropertyForceOrientation(\"%@\");", stringFromOrientation(orientation)]];
-
-    _forceOrientation = orientation;
+    _forceOrientation = forceOrientation;
 }
 
 - (void)resize
 {
     if ((_placementType == MNMRAIDPlacementTypeInline && _state == MNMRAIDStateDefault) || _state == MNMRAIDStateResized) {
         [self setState:MNMRAIDStateResized];
-        [self setCurrentPosition:CGRectMake(_currentPosition.origin.x + _resizeOffsetX, _currentPosition.origin.y + _resizeOffsetY, _resizeWidth, _resizeHeight)];
+        [self setCurrentPosition:CGRectMake(_currentPosition.origin.x + _resizePosition.origin.x, _currentPosition.origin.y + _resizePosition.origin.y, _resizePosition.size.width, _resizePosition.size.height)];
 
-        if ([_delegate respondsToSelector:@selector(mraidShouldResize)]) {
-            [_delegate mraidShouldResize];
+        if ([_delegate respondsToSelector:@selector(mraidShouldResize:)]) {
+            [_delegate mraidShouldResize:self];
         }
     } else if (_state == MNMRAIDStateExpanded) {
         [self fireError:@"" action:@"resize"];
     }
 }
 
-- (long)resizeWidth
+- (void)setResizePosition:(CGRect)resizePosition
 {
-    NSNumber *resizeWidth = [[[NSNumberFormatter alloc] init] numberFromString:[self inject:@"mraid._getResizePropertyWidth();"]];
+    [self inject:[NSString stringWithFormat:@"mraid._setResizePosition(%.0f, %.0f, %.0f, %.0f);", resizePosition.origin.x, resizePosition.origin.y, resizePosition.size.width, resizePosition.size.height]];
 
-    if (resizeWidth) {
-        _resizeWidth = [resizeWidth longValue];
-    } else {
-        [self setResizeWidth:_resizeWidth];
-    }
-
-    return _resizeWidth;
-}
-
-- (void)setResizeWidth:(long)resizeWidth
-{
-    [self inject:[NSString stringWithFormat:@"mraid._setResizePropertyWidth(%li);", resizeWidth]];
-
-    _resizeWidth = resizeWidth;
-}
-
-- (long)resizeHeight
-{
-    NSNumber *resizeHeight = [[[NSNumberFormatter alloc] init] numberFromString:[self inject:@"mraid._getResizePropertyHeight();"]];
-
-    if (resizeHeight) {
-        _resizeHeight = [resizeHeight longValue];
-    } else {
-        [self setResizeHeight:_resizeHeight];
-    }
-
-    return _resizeHeight;
-}
-
-- (void)setResizeHeight:(long)resizeHeight
-{
-    [self inject:[NSString stringWithFormat:@"mraid._setResizePropertyHeight(%li);", resizeHeight]];
-
-    _resizeHeight = resizeHeight;
-}
-
-- (long)resizeOffsetX
-{
-    NSNumber *resizeOffsetX = [[[NSNumberFormatter alloc] init] numberFromString:[self inject:@"mraid._getResizePropertyOffsetX();"]];
-
-    if (resizeOffsetX) {
-        _resizeOffsetX = [resizeOffsetX longValue];
-    } else {
-        [self setResizeOffsetX:_resizeOffsetX];
-    }
-
-    return _resizeOffsetX;
-}
-
-- (void)setResizeOffsetX:(long)resizeOffsetX
-{
-    [self inject:[NSString stringWithFormat:@"mraid._setResizePropertyOffsetX(%li);", resizeOffsetX]];
-
-    _resizeOffsetX = resizeOffsetX;
-}
-
-- (long)resizeOffsetY
-{
-    NSNumber *resizeOffsetY = [[[NSNumberFormatter alloc] init] numberFromString:[self inject:@"mraid._getResizePropertyOffsetY();"]];
-
-    if (resizeOffsetY) {
-        _resizeOffsetY = [resizeOffsetY longValue];
-    } else {
-        [self setResizeOffsetY:_resizeOffsetY];
-    }
-
-    return _resizeOffsetY;
-}
-
-- (void)setResizeOffsetY:(long)resizeOffsetY
-{
-    [self inject:[NSString stringWithFormat:@"mraid._setResizePropertyOffsetY(%li);", resizeOffsetY]];
-
-    _resizeOffsetY = resizeOffsetY;
-}
-
-- (MNMRAIDPosition)customClosePosition
-{
-    NSString *customClosePosition = [self inject:@"mraid._getResizePropertyCustomClosePosition();"];
-
-    if (![customClosePosition isEqualToString:@"top-left"] && ![customClosePosition isEqualToString:@"top-right"] && ![customClosePosition isEqualToString:@"bottom-left"] && ![customClosePosition isEqualToString:@"bottom-right"] && ![customClosePosition isEqualToString:@"top-center"] && ![customClosePosition isEqualToString:@"bottom-center"]) {
-        [self setCustomClosePosition:_customClosePosition];
-    } else if ([customClosePosition isEqualToString:@"top-left"]) {
-        _customClosePosition = MNMRAIDPositionTopLeft;
-    } else if ([customClosePosition isEqualToString:@"top-right"]) {
-        _customClosePosition = MNMRAIDPositionTopRight;
-    } else if ([customClosePosition isEqualToString:@"bottom-left"]) {
-        _customClosePosition = MNMRAIDPositionBottomLeft;
-    } else if ([customClosePosition isEqualToString:@"bottom-right"]) {
-        _customClosePosition = MNMRAIDPositionBottomRight;
-    } else if ([customClosePosition isEqualToString:@"top-center"]) {
-        _customClosePosition = MNMRAIDPositionTopCenter;
-    } else if ([customClosePosition isEqualToString:@"bottom-center"]) {
-        _customClosePosition = MNMRAIDPositionBottomCenter;
-    }
-
-    return _customClosePosition;
+    _resizePosition = resizePosition;
 }
 
 - (void)setCustomClosePosition:(MNMRAIDPosition)customClosePosition
@@ -511,21 +384,6 @@
     [self inject:[NSString stringWithFormat:@"mraid._setResizePropertyCustomClosePosition(\"%@\");", stringFromPosition(customClosePosition)]];
 
     _customClosePosition = customClosePosition;
-}
-
-- (BOOL)allowOffscreen
-{
-    NSString *allowOffscreen = [self inject:@"mraid._getResizePropertyAllowOffscreen();"];
-
-    if (![allowOffscreen isEqualToString:@"true"] && ![allowOffscreen isEqualToString:@"false"]) {
-        [self setAllowOffscreen:_allowOffscreen];
-    } else if ([allowOffscreen isEqualToString:@"true"]) {
-        _allowOffscreen = YES;
-    } else if ([allowOffscreen isEqualToString:@"false"]) {
-        _allowOffscreen = NO;
-    }
-
-    return _allowOffscreen;
 }
 
 - (void)setAllowOffscreen:(BOOL)allowOffscreen
@@ -540,14 +398,14 @@
     if (_placementType == MNMRAIDPlacementTypeInterstitial && _state == MNMRAIDStateDefault) {
         [self setState:MNMRAIDStateHidden];
 
-        if ([_delegate respondsToSelector:@selector(mraidShouldClose)]){
-            [_delegate mraidShouldClose];
+        if ([_delegate respondsToSelector:@selector(mraidShouldClose:)]){
+            [_delegate mraidShouldClose:self];
         }
     } else if (_state == MNMRAIDStateExpanded || _state == MNMRAIDStateResized) {
         [self setState:MNMRAIDStateDefault];
 
-        if ([_delegate respondsToSelector:@selector(mraidShouldClose)]) {
-            [_delegate mraidShouldClose];
+        if ([_delegate respondsToSelector:@selector(mraidShouldClose:)]) {
+            [_delegate mraidShouldClose:self];
         }
     }
 }
@@ -603,17 +461,17 @@
 
 - (void)fireStateChange
 {
-    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"stateChange\", \"%@\"); mraid.getState();", stringFromState(_state)]];
+    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"stateChange\", \"%@\");", stringFromState(_state)]];
 }
 
 - (void)fireViewableChange
 {
-    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"viewableChange\", %@); mraid.isViewable();", _isViewable ? @"true" : @"false"]];
+    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"viewableChange\", %@);", _isViewable ? @"true" : @"false"]];
 }
 
 - (void)fireSizeChange
 {
-    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"sizeChange\", %.0f, %0f); mraid.getCurrentPosition();", _currentPosition.size.width, _currentPosition.size.height]];
+    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"sizeChange\", %.0f, %0f);", _currentPosition.size.width, _currentPosition.size.height]];
 }
 
 @end

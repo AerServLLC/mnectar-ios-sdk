@@ -6,13 +6,13 @@
 @protocol MNMRAIDInterstitialViewControllerDelegate <NSObject>
 
 @optional
-- (void)interstitialViewControllerDidLoad;
-- (void)interstitialViewControllerDidFail;
-- (void)interstitialViewControllerWillAppear;
-- (void)interstitialViewControllerDidAppear;
-- (void)interstitialViewControllerWillDismiss;
-- (void)interstitialViewControllerDidDismiss;
-- (void)interstitialViewControllerCommand:(NSString *)command arguments:(NSDictionary *)arguments;
+- (void)interstitialViewControllerDidLoad:(MNMRAIDInterstitialViewController *)interstitial;
+- (void)interstitialViewControllerDidFail:(MNMRAIDInterstitialViewController *)interstitial;
+- (void)interstitialViewControllerWillAppear:(MNMRAIDInterstitialViewController *)interstitial;
+- (void)interstitialViewControllerDidAppear:(MNMRAIDInterstitialViewController *)interstitial;
+- (void)interstitialViewControllerWillDismiss:(MNMRAIDInterstitialViewController *)interstitial;
+- (void)interstitialViewControllerDidDismiss:(MNMRAIDInterstitialViewController *)interstitial;
+- (void)interstitialViewControllerBridge:(MNMRAIDInterstitialViewController *)interstitial command:(NSString *)command arguments:(NSDictionary *)arguments;
 
 @end
 
@@ -22,7 +22,7 @@
 
 @property (nonatomic, weak) id<MNMRAIDInterstitialViewControllerDelegate> delegate;
 
-- (instancetype)init;
+- (instancetype)initWithDelegate:(id<MNMRAIDInterstitialViewControllerDelegate>)delegate;
 
 - (void)loadHTML:(NSString *)html baseURL:(NSURL *)baseURL;
 - (void)showFromViewController:(UIViewController *)viewController;

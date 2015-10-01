@@ -9,9 +9,9 @@ NSString *URLEncodedString(NSString *string) {
 
 @interface MNAdClient ()
 
-@property(nonatomic, strong) AF2HTTPRequestOperationManager *requestManager;
-@property(nonatomic, strong) NSString *adUnitId;
-@property(nonatomic, strong) NSURL *impressionURL;
+@property (nonatomic, strong) AF2HTTPRequestOperationManager *requestManager;
+@property (nonatomic, strong) NSString *adUnitId;
+@property (nonatomic, strong) NSURL *impressionURL;
 
 @end
 

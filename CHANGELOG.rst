@@ -23,3 +23,7 @@
 ==================
 * rename AFNetworking
 * fix impression tracking
+
+1.6.0 (2015-09-30)
+==================
+* precache ads

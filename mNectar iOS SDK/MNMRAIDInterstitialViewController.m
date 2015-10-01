@@ -26,9 +26,10 @@
 
 @implementation MNMRAIDInterstitialViewController
 
-- (instancetype)init
+- (instancetype)initWithDelegate:(id<MNMRAIDInterstitialViewControllerDelegate>)delegate
 {
     if (self = [super init]) {
+        _delegate = delegate;
         _orientation = [[UIApplication sharedApplication] statusBarOrientation];
 
         _mraidView = [[MNMRAIDView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -56,8 +57,8 @@
         return;
     }
 
-    if ([_delegate respondsToSelector:@selector(interstitialViewControllerWillAppear)]) {
-        [_delegate interstitialViewControllerWillAppear];
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerWillAppear:)]) {
+        [_delegate interstitialViewControllerWillAppear:self];
     }
 
     if ([viewController isViewLoaded] && [[viewController view] window]) {
@@ -66,8 +67,8 @@
         }];
     }
     
-    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidAppear)]) {
-        [_delegate interstitialViewControllerDidAppear];
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidAppear:)]) {
+        [_delegate interstitialViewControllerDidAppear:self];
     }
 }
 
@@ -84,34 +85,34 @@
 
 #pragma mark - MNMRAIDViewDelegate
 
-- (void)mraidDidLoad
+- (void)mraidDidLoad:(MNMRAIDView *)mraid
 {
-    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidLoad)]) {
-        [_delegate interstitialViewControllerDidLoad];
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidLoad:)]) {
+        [_delegate interstitialViewControllerDidLoad:self];
     }
 }
 
-- (void)mraidDidFail
+- (void)mraidDidFail:(MNMRAIDView *)mraid
 {
-    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidFail)]) {
-        [_delegate interstitialViewControllerDidFail];
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidFail:)]) {
+        [_delegate interstitialViewControllerDidFail:self];
     }
 }
 
-- (void)mraidShouldClose
+- (void)mraidShouldClose:(MNMRAIDView *)mraid
 {
-    if ([_delegate respondsToSelector:@selector(interstitialViewControllerWillDismiss)]) {
-        [_delegate interstitialViewControllerWillDismiss];
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerWillDismiss:)]) {
+        [_delegate interstitialViewControllerWillDismiss:self];
     }
 
     [self dismissViewControllerAnimated:NO completion:^{}];
     
-    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidDismiss)]) {
-        [_delegate interstitialViewControllerDidDismiss];
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerDidDismiss:)]) {
+        [_delegate interstitialViewControllerDidDismiss:self];
     }
 }
 
-- (void)mraidShouldReorient
+- (void)mraidShouldReorient:(MNMRAIDView *)mraid
 {
     UIViewController *presentingViewController = [self presentingViewController];
 
@@ -125,7 +126,7 @@
     }
 }
 
-- (void)mraidShouldOpen:(NSURL *)url
+- (void)mraidShouldOpen:(MNMRAIDView *)mraid url:(NSURL *)url
 {
     [_mraidView startLoading];
 
@@ -196,10 +197,10 @@
     [[[self requestManager] operationQueue] addOperation:operation];
 }
 
-- (void)mraidCommand:(NSString *)command arguments:(NSDictionary *)arguments
+- (void)mraidBridge:(MNMRAIDView *)mraid command:(NSString *)command arguments:(NSDictionary *)arguments
 {
-    if ([_delegate respondsToSelector:@selector(interstitialViewControllerCommand:arguments:)]) {
-        [_delegate interstitialViewControllerCommand:command arguments:arguments];
+    if ([_delegate respondsToSelector:@selector(interstitialViewControllerBridge:command:arguments:)]) {
+        [_delegate interstitialViewControllerBridge:self command:command arguments:arguments];
     }
 }
 

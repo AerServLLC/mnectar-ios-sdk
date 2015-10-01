@@ -33,15 +33,15 @@ typedef enum {
 @protocol MNMRAIDViewDelegate <NSObject>
 
 @optional
-- (void)mraidDidLoad;
-- (void)mraidDidFail;
+- (void)mraidDidLoad:(MNMRAIDView *)mraid;
+- (void)mraidDidFail:(MNMRAIDView *)mraid;
 
-- (void)mraidShouldReorient;
-- (void)mraidShouldExpand:(NSURL *)url;
-- (void)mraidShouldResize;
-- (void)mraidShouldClose;
-- (void)mraidShouldOpen:(NSURL *)url;
-- (void)mraidCommand:(NSString *)command arguments:(NSDictionary *)arguments;
+- (void)mraidShouldReorient:(MNMRAIDView *)mraid;
+- (void)mraidShouldExpand:(MNMRAIDView *)mraid url:(NSURL *)url;
+- (void)mraidShouldResize:(MNMRAIDView *)mraid;
+- (void)mraidShouldClose:(MNMRAIDView *)mraid;
+- (void)mraidShouldOpen:(MNMRAIDView *)mraid url:(NSURL *)url;
+- (void)mraidBridge:(MNMRAIDView *)mraid command:(NSString *)command arguments:(NSDictionary *)arguments;
 
 @end
 
@@ -58,15 +58,11 @@ typedef enum {
 @property (nonatomic, assign) MNMRAIDState state;
 @property (nonatomic, assign) MNMRAIDPlacementType placementType;
 @property (nonatomic, assign) BOOL isViewable;
-@property (nonatomic, assign) long expandWidth;
-@property (nonatomic, assign) long expandHeight;
+@property (nonatomic, assign) CGSize expandSize;
 @property (nonatomic, assign) BOOL useCustomClose;
 @property (nonatomic, assign) BOOL allowOrientationChange;
 @property (nonatomic, assign) MNMRAIDOrientation forceOrientation;
-@property (nonatomic, assign) long resizeWidth;
-@property (nonatomic, assign) long resizeHeight;
-@property (nonatomic, assign) long resizeOffsetX;
-@property (nonatomic, assign) long resizeOffsetY;
+@property (nonatomic, assign) CGRect resizePosition;
 @property (nonatomic, assign) MNMRAIDPosition customClosePosition;
 @property (nonatomic, assign) BOOL allowOffscreen;
 @property (nonatomic, assign) CGRect currentPosition;

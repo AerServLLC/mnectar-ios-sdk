@@ -36,8 +36,8 @@
         NSString *adUnit = [self.adUnitField text];
         self.rewardable = [MNRewardable rewardableForAdUnitId:adUnit];
         [self.rewardable setDelegate:self];
-        [self.rewardable loadAd];
         [self.button setEnabled:false];
+        [self.rewardable loadAd];
     }
     else
     {
@@ -84,7 +84,6 @@
         [self presentViewController:ac animated:YES completion:nil];
     }
     self.reward = nil;
-
 }
 - (void)rewardableShouldRewardUser:(MNRewardable *)rewardable reward:(MNReward *)reward
 {

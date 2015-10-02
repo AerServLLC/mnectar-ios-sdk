@@ -54,6 +54,8 @@
         [self setDefaultPosition:frame];
         [self setScreenSize:screen.size];
         [self setSupportsInlineVideo:YES];
+
+        [self inject:@"window.addEventListener(\"load\", function () { mraid._call(\"load\"); });"];
     }
 
     return self;
@@ -136,20 +138,6 @@
 
 #pragma mark - UIWebViewDelegate
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    if (_state == MNMRAIDStateLoading) {
-        [self setState:MNMRAIDStateDefault];
-        [self fireReady];
-        [self updateCloseButton];
-        [self dispatchOrientationChange];
-
-        if ([_delegate respondsToSelector:@selector(mraidDidLoad:)]) {
-            [_delegate mraidDidLoad:self];
-        }
-    }
-}
-
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     if ([_delegate respondsToSelector:@selector(mraidDidFail:)]) {
@@ -180,7 +168,18 @@
             }
         }
 
-        if ([command isEqualToString:@"expandProperties"]) {
+        if ([command isEqualToString:@"load"]) {
+            if (_state == MNMRAIDStateLoading) {
+                [self setState:MNMRAIDStateDefault];
+                [self fireReady];
+                [self updateCloseButton];
+                [self dispatchOrientationChange];
+
+                if ([_delegate respondsToSelector:@selector(mraidDidLoad:)]) {
+                    [_delegate mraidDidLoad:self];
+                }
+            }
+        } else if ([command isEqualToString:@"expandProperties"]) {
             NSNumber *width = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"width"]];
             NSNumber *height = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"height"]];
 
@@ -451,7 +450,7 @@
 
 - (void)fireReady
 {
-    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"ready\");true;"]];
+    [self inject:[NSString stringWithFormat:@"mraid._fireEvent(\"ready\");"]];
 }
 
 - (void)fireError:(NSString *)message action:(NSString *)action

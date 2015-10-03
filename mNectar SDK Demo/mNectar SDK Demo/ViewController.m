@@ -36,8 +36,8 @@
         NSString *adUnit = [self.adUnitField text];
         self.rewardable = [MNRewardable rewardableForAdUnitId:adUnit];
         [self.rewardable setDelegate:self];
-        [self.button setEnabled:false];
         [self.rewardable loadAd];
+        [self.button setEnabled:false];
     }
     else
     {

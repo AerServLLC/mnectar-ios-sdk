@@ -18,7 +18,7 @@ static NSMutableDictionary *interstitials = nil;
 
 @implementation MNInterstitial
 
-+ (instancetype)interstitialForAdUnitId:(NSString *)adUnitId
++ (instancetype)interstitialForAdUnitId:(NSString *)adUnitId parameters:(NSDictionary *)parameters
 {
     static dispatch_once_t predicate;
 
@@ -27,19 +27,25 @@ static NSMutableDictionary *interstitials = nil;
     });
 
     if (![interstitials objectForKey:adUnitId]) {
-        [interstitials setObject:[[[self class] alloc] initWithAdUnitId:adUnitId] forKey:adUnitId];
+        [interstitials setObject:[[[self class] alloc] initWithAdUnitId:adUnitId parameters:parameters] forKey:adUnitId];
     }
 
     return [interstitials objectForKey:adUnitId];
 }
 
-- (instancetype)initWithAdUnitId:(NSString *)adUnitId
++ (instancetype)interstitialForAdUnitId:(NSString *)adUnitId
+{
+    return [MNInterstitial interstitialForAdUnitId:adUnitId parameters:nil];
+}
+
+- (instancetype)initWithAdUnitId:(NSString *)adUnitId parameters:(NSDictionary *)parameters
 {
     if (self = [super init]) {
         _adUnitId = adUnitId;
         _adReady = NO;
         _prefetch = MN_PREFETCH;
         _prefetchReady = NO;
+        _parameters = parameters;
 
         if (_prefetch) {
             [self prefetchAd];
@@ -47,6 +53,11 @@ static NSMutableDictionary *interstitials = nil;
     }
 
     return self;
+}
+
+- (instancetype)initWithAdUnitId:(NSString *)adUnitId
+{
+    return [self initWithAdUnitId:adUnitId parameters:nil];
 }
 
 - (void)setPrefetch:(BOOL)prefetch
@@ -67,6 +78,12 @@ static NSMutableDictionary *interstitials = nil;
 
 - (void)prefetchAd
 {
+    NSMutableString *q = [[NSMutableString alloc] init];
+
+    for (NSString *parameter in [_parameters allKeys]) {
+        [q appendFormat:@"%@%@=%@", [q length] ? @"&" : @"", URLEncodedString(parameter), URLEncodedString(_parameters[parameter])];
+    }
+
     if (_prefetch && !_prefetchedAdClient) {
         _prefetchedAdClient = [[MNAdClient alloc] initWithAdUnitId:_adUnitId];
         _prefetchedMRAIDInterstitialViewController = [[MNMRAIDInterstitialViewController alloc] initWithDelegate:self];
@@ -77,12 +94,18 @@ static NSMutableDictionary *interstitials = nil;
             } else {
                 [self interstitialViewControllerDidFail:_prefetchedMRAIDInterstitialViewController];
             }
-        }];
+        } parameters:@{@"q" : q}];
     }
 }
 
 - (void)loadAd
 {
+    NSMutableString *q = [[NSMutableString alloc] init];
+
+    for (NSString *parameter in [_parameters allKeys]) {
+        [q appendFormat:@"%@%@=%@", [q length] ? @"&" : @"", URLEncodedString(parameter), URLEncodedString(_parameters[parameter])];
+    }
+
     if (_prefetch && _prefetchReady && !_adReady) {
         _adClient = _prefetchedAdClient;
         _mraidInterstitialViewController = _prefetchedMRAIDInterstitialViewController;
@@ -103,7 +126,7 @@ static NSMutableDictionary *interstitials = nil;
             } else {
                 [self interstitialViewControllerDidFail:_mraidInterstitialViewController];
             }
-        }];
+        } parameters:@{@"q" : q}];
     }
 }
 

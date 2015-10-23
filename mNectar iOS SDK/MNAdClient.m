@@ -29,7 +29,7 @@ NSString *URLEncodedString(NSString *string) {
     return self;
 }
 
-- (NSURL *)adURL
+- (NSURL *)adURLWithParameters:(NSDictionary *)parameters
 {
     NSString *adUnitId = _adUnitId;
     NSString *udid = [[MNDevice sharedDevice] udid];
@@ -67,14 +67,19 @@ NSString *URLEncodedString(NSString *string) {
     [url appendFormat:@"&av=%@", URLEncodedString(applicationVersion)];
     [url appendFormat:@"&z=%@", URLEncodedString(timeZone)];
     [url appendFormat:@"&ll=%@", URLEncodedString(location)];
+
+    for (NSString *key in parameters) {
+        [url appendFormat:@"&%@=%@", URLEncodedString(key), URLEncodedString(parameters[key])];
+    }
+
     [url appendFormat:@"&%u", arc4random()];
 
     return [NSURL URLWithString:url];
 }
 
-- (void)requestAd:(void (^)(NSURL *baseURL, NSInteger status, NSDictionary *headers, NSData *data, NSError *error))handler
+- (void)requestAd:(void (^)(NSURL *baseURL, NSInteger status, NSDictionary *headers, NSData *data, NSError *error))handler parameters:(NSDictionary *)parameters
 {
-    NSURL *url = [self adURL];
+    NSURL *url = [self adURLWithParameters:parameters];
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", [url scheme], [url host]]];
 
     NSLog(@"mnectar: requesting ad %@", url);

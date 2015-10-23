@@ -19,9 +19,12 @@
 @property (nonatomic, weak) id<MNInterstitialDelegate> delegate;
 @property (nonatomic, assign) BOOL prefetch;
 @property (nonatomic, assign, readonly, getter=isAdReady) BOOL adReady;
+@property (nonatomic, strong) NSDictionary *parameters;
 
++ (instancetype)interstitialForAdUnitId:(NSString *)adUnitId parameters:(NSDictionary *)parameters;
 + (instancetype)interstitialForAdUnitId:(NSString *)adUnitId;
 
+- (instancetype)initWithAdUnitId:(NSString *)adUnitId parameters:(NSDictionary *)parameters;
 - (instancetype)initWithAdUnitId:(NSString *)adUnitId;
 
 - (void)loadAd;

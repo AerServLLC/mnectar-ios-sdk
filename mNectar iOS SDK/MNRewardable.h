@@ -21,9 +21,12 @@
 @property (nonatomic, weak) id<MNRewardableDelegate> delegate;
 @property (nonatomic, assign) BOOL prefetch;
 @property (nonatomic, assign, readonly, getter=isAdReady) BOOL adReady;
+@property (nonatomic, strong) NSDictionary *parameters;
 
++ (instancetype)rewardableForAdUnitId:(NSString *)adUnitId parameters:(NSDictionary *)parameters;
 + (instancetype)rewardableForAdUnitId:(NSString *)adUnitId;
 
+- (instancetype)initWithAdUnitId:(NSString *)adUnitId parameters:(NSDictionary *)parameters;
 - (instancetype)initWithAdUnitId:(NSString *)adUnitId;
 
 - (void)loadAd;

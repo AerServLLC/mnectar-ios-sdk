@@ -34,7 +34,12 @@
 - (IBAction)buttonPress:(id)sender {
     if (!self.loaded) {
         NSString *adUnit = [self.adUnitField text];
-        self.rewardable = [MNRewardable rewardableForAdUnitId:adUnit];
+        
+        NSMutableDictionary<NSString*, NSString*> *params = [NSMutableDictionary<NSString *, NSString *> new];
+        [params setValue:@"value for param 2" forKey:@"pub_param2"];
+        [params setValue:@"value for param 1" forKey:@"pub_param1"];
+        
+        self.rewardable = [MNRewardable rewardableForAdUnitId:adUnit parameters:params];
         [self.rewardable setDelegate:self];
         [self.button setEnabled:false];
         [self.rewardable loadAd];

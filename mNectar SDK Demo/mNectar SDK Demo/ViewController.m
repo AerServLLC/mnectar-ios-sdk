@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MNConstants.h"
 
 
 @interface ViewController()
@@ -24,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.loaded=false;
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -36,8 +38,10 @@
         NSString *adUnit = [self.adUnitField text];
         
         NSMutableDictionary<NSString*, NSString*> *params = [NSMutableDictionary<NSString *, NSString *> new];
-        [params setValue:@"value for param 2" forKey:@"pub_param2"];
-        [params setValue:@"value for param 1" forKey:@"pub_param1"];
+        [params setValue:@"3" forKey:@"pub_param0"];
+        [params setValue:@"3" forKey:@"pub_param_adType"];
+        [params setValue:@"1186012773" forKey:@"pub_param_uid"];
+
         
         self.rewardable = [MNRewardable rewardableForAdUnitId:adUnit parameters:params];
         [self.rewardable setDelegate:self];

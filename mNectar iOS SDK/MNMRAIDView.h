@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 typedef enum {
     MNMRAIDStateLoading,
@@ -47,7 +48,8 @@ typedef enum {
 
 @interface MNMRAIDView : UIView
 
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) UIWebView *oldWebView;
+@property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) UIImage *closeImageNormal;
 @property (nonatomic, strong) UIImage *closeImageHighlighted;

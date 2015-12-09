@@ -51,7 +51,7 @@
                                     <action selector="buttonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="owW-LX-A74"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="7dEm441fnFeD1362ME3exLdfZfdcd3f4d8" borderStyle="roundedRect" placeholder="Ad Unit" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7uB-nS-QLU">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ad Unit" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7uB-nS-QLU">
                                 <rect key="frame" x="16" y="78" width="568" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>

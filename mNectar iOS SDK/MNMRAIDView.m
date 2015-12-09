@@ -5,6 +5,22 @@
 
 @interface MNMRAIDView () <UIWebViewDelegate, WKNavigationDelegate>
 
+@property (nonatomic, strong) UIWebView *oldWebView;
+@property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
+@property (nonatomic, strong) UIImage *closeImageNormal;
+@property (nonatomic, strong) UIImage *closeImageHighlighted;
+
+
+@property (nonatomic, assign) MNMRAIDState state;
+
+@property (nonatomic, assign) CGSize expandSize;
+@property (nonatomic, assign) CGRect resizePosition;
+@property (nonatomic, assign) MNMRAIDPosition customClosePosition;
+@property (nonatomic, assign) BOOL allowOffscreen;
+@property (nonatomic, assign) CGRect currentPosition;
+@property (nonatomic, assign) CGRect defaultPosition;
+@property (nonatomic, assign) BOOL supportsInlineVideo;
 @end
 
 @implementation MNMRAIDView
@@ -35,7 +51,7 @@
             [_oldWebView setAllowsInlineMediaPlayback:YES];
             [_oldWebView setMediaPlaybackRequiresUserAction:NO];
             [_oldWebView setDelegate:self];
-            [self addSubview:_webView];
+            [self addSubview:_oldWebView];
         }
 
         _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -81,9 +97,10 @@
         [_webView evaluateJavaScript:js completionHandler:nil];
         return nil;
     }
-    return [_oldWebView stringByEvaluatingJavaScriptFromString:js];
+    else{
+        return [_oldWebView stringByEvaluatingJavaScriptFromString:js];
+    }
 }
-
 - (void)startLoading
 {
     [_loadingIndicator startAnimating];
@@ -140,12 +157,25 @@
     [self inject:@"var event = document.createEvent('OrientationEvent'); event.initEvent('orientationchange', false, false); window.dispatchEvent(event);"];
 }
 
+- (void)loadHTML:(NSString *)html baseURL:(NSURL *)baseURL
+{
+    if ([WKWebView class]) {
+        [_webView loadHTMLString:html baseURL:baseURL];
+    }else [_oldWebView loadHTMLString:html baseURL:baseURL];
+}
+
 #pragma mark - UIVIew
 
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    [_webView setFrame:frame];
+    if ([WKWebView class]) {
+        [_webView setFrame:frame];
+    }
+    else
+    {
+        [_oldWebView setFrame:frame];
+    }
     [_loadingIndicator setFrame:frame];
 
     [self updateCloseButton];

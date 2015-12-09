@@ -3,7 +3,7 @@
 #endif
 
 #ifndef MN_PREFETCH
-#define MN_PREFETCH YES
+#define MN_PREFETCH NO
 #endif
 
 #ifndef MN_ENDPOINT

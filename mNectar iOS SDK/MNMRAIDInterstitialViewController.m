@@ -48,7 +48,7 @@
 
 - (void)loadHTML:(NSString *)html baseURL:(NSURL *)baseURL
 {
-    [[_mraidView webView] loadHTMLString:html baseURL:baseURL];
+    [_mraidView loadHTML:html baseURL:baseURL];
 }
 
 - (void)showFromViewController:(UIViewController *)viewController

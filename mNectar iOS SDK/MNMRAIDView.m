@@ -1,12 +1,16 @@
 #import "MNMRAIDView.h"
+#import "MNWebView.h"
 
 #define MN_IMG_CLOSE_NORMAL "MNMRAID.bundle/cancel"
 #define MN_IMG_CLOSE_HIGHLIGHTED "MNMRAID.bundle/cancel_white"
 
-@interface MNMRAIDView () <UIWebViewDelegate, WKNavigationDelegate>
+@interface MNMRAIDView () <MNWebViewDelegate>
 
-@property (nonatomic, strong) UIWebView *oldWebView;
-@property (nonatomic, strong) WKWebView *webView;
+//@property (nonatomic, strong) UIWebView *oldWebView;
+//@property (nonatomic, strong) WKWebView *webView;
+
+@property (nonatomic, strong) MNWebView *webView;
+
 @property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) UIImage *closeImageNormal;
 @property (nonatomic, strong) UIImage *closeImageHighlighted;
@@ -30,29 +34,9 @@
     if (self = [super initWithFrame:frame]) {
         [self setBackgroundColor:[UIColor clearColor]];
         [self setOpaque:NO];
-        if ([WKWebView class]) {
-            WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-            [config setAllowsInlineMediaPlayback:YES];
-            [config setMediaPlaybackRequiresUserAction:NO];
-            _webView = [[WKWebView alloc] initWithFrame:frame configuration:config];
-            [[_webView scrollView] setScrollEnabled:NO];
-            [_webView setBackgroundColor:[UIColor clearColor]];
-            [_webView setOpaque:NO];
-
-            [_webView setNavigationDelegate:self];
-            [self addSubview:_webView];
-        }
-        else
-        {
-            _oldWebView = [[UIWebView alloc] initWithFrame:frame];
-            [[_oldWebView scrollView] setScrollEnabled:NO];
-            [_oldWebView setBackgroundColor:[UIColor clearColor]];
-            [_oldWebView setOpaque:NO];
-            [_oldWebView setAllowsInlineMediaPlayback:YES];
-            [_oldWebView setMediaPlaybackRequiresUserAction:NO];
-            [_oldWebView setDelegate:self];
-            [self addSubview:_oldWebView];
-        }
+        _webView = [[MNWebView alloc] initWithFrame:frame];
+        [_webView setDelegate:self];
+        [self addSubview:_webView];
 
         _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         [_loadingIndicator setFrame:frame];
@@ -91,15 +75,10 @@
     return self;
 }
 
-- (NSString *)inject:(NSString *)js
+- (void)inject:(NSString *)js
 {
-    if ([WKWebView class]) {
-        [_webView evaluateJavaScript:js completionHandler:nil];
-        return nil;
-    }
-    else{
-        return [_oldWebView stringByEvaluatingJavaScriptFromString:js];
-    }
+
+    [_webView evaluateJavaScriptFromString:js];
 }
 - (void)startLoading
 {
@@ -159,9 +138,7 @@
 
 - (void)loadHTML:(NSString *)html baseURL:(NSURL *)baseURL
 {
-    if ([WKWebView class]) {
-        [_webView loadHTMLString:html baseURL:baseURL];
-    }else [_oldWebView loadHTMLString:html baseURL:baseURL];
+        [_webView loadHTML:html baseURL:baseURL];
 }
 
 #pragma mark - UIVIew
@@ -169,13 +146,9 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    if ([WKWebView class]) {
-        [_webView setFrame:frame];
-    }
-    else
-    {
-        [_oldWebView setFrame:frame];
-    }
+    
+    [_webView setFrame:frame];
+
     [_loadingIndicator setFrame:frame];
 
     [self updateCloseButton];
@@ -184,16 +157,16 @@
     [self fireSizeChange];
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - MNWebViewDelegate
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(MNWebView *)webView didFailLoadWithError:(NSError *)error
 {
     if ([_delegate respondsToSelector:@selector(mraidDidFail:)]) {
         [_delegate mraidDidFail:self];
     }
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+- (BOOL)webView:(MNWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     NSURL *url = [request URL];
 
@@ -323,146 +296,6 @@
     }
 
     return YES;
-}
-
-#pragma mark - WKNavigationDelegate
-
-- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(nonnull NSError *)error{
-    if ([_delegate respondsToSelector:@selector(mraidDidFail:)]) {
-        [_delegate mraidDidFail:self];
-    }
-}
-
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(nonnull WKNavigationAction *)navigationAction decisionHandler:(nonnull void (^)(WKNavigationActionPolicy))decisionHandler
-{
-    NSURL *url = [navigationAction.request URL];
-    
-    if ([[url scheme] isEqualToString:@"mraid"]) {
-        NSString *command = [url host];
-        NSMutableDictionary *arguments = [NSMutableDictionary dictionary];
-        
-        for (NSString *component in [[url query] componentsSeparatedByString:@"&"]) {
-            NSArray *nameValuePair = [component componentsSeparatedByString:@"="];
-            
-            if ([nameValuePair count]) {
-                NSString *name = [nameValuePair objectAtIndex:0];
-                NSString *value = nil;
-                
-                if ([nameValuePair count] > 1) {
-                    value = [[[nameValuePair objectAtIndex:1] stringByReplacingOccurrencesOfString:@"+" withString:@" "] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                }
-                
-                [arguments setObject:value forKey:name];
-            }
-        }
-        
-        if ([command isEqualToString:@"load"]) {
-            if (_state == MNMRAIDStateLoading) {
-                [self setState:MNMRAIDStateDefault];
-                [self fireReady];
-                [self updateCloseButton];
-                [self dispatchOrientationChange];
-                
-                if ([_delegate respondsToSelector:@selector(mraidDidLoad:)]) {
-                    [_delegate mraidDidLoad:self];
-                }
-            }
-        } else if ([command isEqualToString:@"expandProperties"]) {
-            NSNumber *width = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"width"]];
-            NSNumber *height = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"height"]];
-            
-            if (width && height) {
-                _expandSize = CGSizeMake([width floatValue], [height floatValue]);
-            }
-            
-            NSString *useCustomClose = arguments[@"useCustomClose"];
-            
-            if (useCustomClose && [useCustomClose isEqualToString:@"true"]) {
-                _useCustomClose = YES;
-            } else if (useCustomClose && [useCustomClose isEqualToString:@"false"]) {
-                _useCustomClose = NO;
-            }
-            
-            [self updateCloseButton];
-        } else if ([command isEqualToString:@"expand"]) {
-            [self expand:[NSURL URLWithString:arguments[@"url"]]];
-        } else if ([command isEqualToString:@"orientationProperties"]) {
-            NSString *allowOrientationChange = arguments[@"allowOrientationChange"];
-            
-            if (allowOrientationChange && [allowOrientationChange isEqualToString:@"true"]) {
-                _allowOrientationChange = YES;
-            } else if (allowOrientationChange && [allowOrientationChange isEqualToString:@"false"]) {
-                _allowOrientationChange = NO;
-            }
-            
-            NSString *forceOrientation = arguments[@"forceOrientation"];
-            
-            if ([forceOrientation isEqualToString:@"portrait"]) {
-                _forceOrientation = MNMRAIDOrientationPortrait;
-            } else if ([forceOrientation isEqualToString:@"landscape"]) {
-                _forceOrientation = MNMRAIDOrientationLandscape;
-            } else if ([forceOrientation isEqualToString:@"none"]) {
-                _forceOrientation = MNMRAIDOrientationNone;
-            }
-            
-            if ([_delegate respondsToSelector:@selector(mraidShouldReorient:)]) {
-                [_delegate mraidShouldReorient:self];
-            }
-        } else if ([command isEqualToString:@"resizeProperties"]) {
-            NSNumber *offsetX = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"offsetX"]];
-            NSNumber *offsetY = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"offsetY"]];
-            NSNumber *width = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"width"]];
-            NSNumber *height = [[[NSNumberFormatter alloc] init] numberFromString:arguments[@"height"]];
-            
-            if (offsetX && offsetY && width && height) {
-                _resizePosition = CGRectMake([offsetX floatValue], [offsetY floatValue], [width floatValue], [height floatValue]);
-            }
-            
-            NSString *customClosePosition = arguments[@"customClosePosition"];
-            
-            if (![customClosePosition isEqualToString:@"top-left"] && ![customClosePosition isEqualToString:@"top-right"] && ![customClosePosition isEqualToString:@"bottom-left"] && ![customClosePosition isEqualToString:@"bottom-right"] && ![customClosePosition isEqualToString:@"top-center"] && ![customClosePosition isEqualToString:@"bottom-center"]) {
-                [self setCustomClosePosition:_customClosePosition];
-            } else if ([customClosePosition isEqualToString:@"top-left"]) {
-                _customClosePosition = MNMRAIDPositionTopLeft;
-            } else if ([customClosePosition isEqualToString:@"top-right"]) {
-                _customClosePosition = MNMRAIDPositionTopRight;
-            } else if ([customClosePosition isEqualToString:@"bottom-left"]) {
-                _customClosePosition = MNMRAIDPositionBottomLeft;
-            } else if ([customClosePosition isEqualToString:@"bottom-right"]) {
-                _customClosePosition = MNMRAIDPositionBottomRight;
-            } else if ([customClosePosition isEqualToString:@"top-center"]) {
-                _customClosePosition = MNMRAIDPositionTopCenter;
-            } else if ([customClosePosition isEqualToString:@"bottom-center"]) {
-                _customClosePosition = MNMRAIDPositionBottomCenter;
-            }
-            
-            NSString *allowOffscreen = arguments[@"allowOffscreen"];
-            
-            if (allowOffscreen && [allowOffscreen isEqualToString:@"true"]) {
-                _allowOffscreen = YES;
-            } else if (allowOffscreen && [allowOffscreen isEqualToString:@"false"]) {
-                _allowOffscreen = NO;
-            }
-        } else if ([command isEqualToString:@"resize"]) {
-            [self resize];
-        } else if ([command isEqualToString:@"close"]) {
-            [self close];
-        } else if ([command isEqualToString:@"open"]) {
-            [self open:[NSURL URLWithString:arguments[@"url"]]];
-        } else if ([command isEqualToString:@"log"]) {
-            NSLog(@"%@", arguments[@"message"]);
-        } else {
-            [self command:command arguments:arguments];
-        }
-        
-        decisionHandler(WKNavigationActionPolicyCancel);
-    } else if (_state != MNMRAIDStateLoading) {
-        [self open:url];
-        
-        decisionHandler(WKNavigationActionPolicyCancel);
-    }
-    
-    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 

@@ -86,7 +86,6 @@ NSString *URLEncodedString(NSString *string) {
 
     NSMutableURLRequest *request = [[_requestManager requestSerializer] requestWithMethod:@"GET" URLString:[url absoluteString] parameters:nil error:nil];
     [request setValue:[[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] forHTTPHeaderField:@"User-Agent"];
-
     AF2HTTPRequestOperation *operation = [_requestManager HTTPRequestOperationWithRequest:request success:^(AF2HTTPRequestOperation *operation, NSData *data) {
         NSError *error = nil;
         NSDictionary *headers = [[operation response] allHeaderFields];

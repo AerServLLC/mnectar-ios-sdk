@@ -12,7 +12,7 @@
 #define MN_NAV_IMG_CLOSE_SIZE 28, 28
 #define MN_NAV_IMG_CLOSE_NORMAL "MNMRAID.bundle/close_blue"
 
-@interface MNMRAIDBrowserViewController () <UIWebViewDelegate>
+@interface MNMRAIDBrowserViewController () <MNWebViewDelegate>
 
 @property (nonatomic, assign) UIInterfaceOrientation orientation;
 
@@ -36,10 +36,8 @@
         [[self view] setBackgroundColor:[UIColor clearColor]];
         [[self view] setOpaque:NO];
 
-        _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, screen.size.width, screen.size.height - MN_NAV_HEIGHT)];
+        _webView = [[MNWebView alloc] initWithFrame:CGRectMake(0, 0, screen.size.width, screen.size.height - MN_NAV_HEIGHT)];
         [_webView setScalesPageToFit:YES];
-        [_webView setAllowsInlineMediaPlayback:YES];
-        [_webView setMediaPlaybackRequiresUserAction:NO];
         [_webView setDelegate:self];
         [[self view] addSubview:_webView];
 

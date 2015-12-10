@@ -61,7 +61,7 @@ typedef enum {
 
 - (instancetype)initWithFrame:(CGRect)frame;
 
-- (NSString *)inject:(NSString *)js;
+- (void)inject:(NSString *)js;
 - (void)updateCloseButton;
 - (void)startLoading;
 - (void)stopLoading;

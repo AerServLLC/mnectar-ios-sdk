@@ -31,3 +31,7 @@
 1.7.0 (2015-10-23)
 ==================
 * postback parameter support
+
+1.8.0 (2015-10-23)
+==================
+* WebKit for devices that support it

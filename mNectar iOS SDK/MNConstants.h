@@ -3,7 +3,7 @@
 #endif
 
 #ifndef MN_PREFETCH
-#define MN_PREFETCH NO
+#define MN_PREFETCH YES
 #endif
 
 #ifndef MN_ENDPOINT
@@ -11,5 +11,5 @@
 #endif
 
 #ifndef MN_VERSION
-#define MN_VERSION "1.7.0"
+#define MN_VERSION "1.8.0"
 #endif

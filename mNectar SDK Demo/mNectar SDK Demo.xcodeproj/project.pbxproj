@@ -18,6 +18,7 @@
 		3C4A75671BBDACEB001193A0 /* AF2URLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A755D1BBDACEA001193A0 /* AF2URLResponseSerialization.m */; };
 		3C4A75681BBDACEB001193A0 /* AF2URLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A755F1BBDACEA001193A0 /* AF2URLSessionManager.m */; };
 		3C7B7BFC1C16379500627294 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C7B7BFB1C16379500627294 /* WebKit.framework */; };
+		3CB7F8A01C18D4B4003738A9 /* MNWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7F89F1C18D4B4003738A9 /* MNWebView.m */; };
 		3CB9740F1BA88FAE00A159D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB9740E1BA88FAE00A159D4 /* main.m */; };
 		3CB974121BA88FAE00A159D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974111BA88FAE00A159D4 /* AppDelegate.m */; };
 		3CB974151BA88FAE00A159D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB974141BA88FAE00A159D4 /* ViewController.m */; };
@@ -67,6 +68,8 @@
 		3C4A755E1BBDACEA001193A0 /* AF2URLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AF2URLSessionManager.h; sourceTree = "<group>"; };
 		3C4A755F1BBDACEA001193A0 /* AF2URLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AF2URLSessionManager.m; sourceTree = "<group>"; };
 		3C7B7BFB1C16379500627294 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		3CB7F89E1C18D4B4003738A9 /* MNWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNWebView.h; sourceTree = "<group>"; };
+		3CB7F89F1C18D4B4003738A9 /* MNWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNWebView.m; sourceTree = "<group>"; };
 		3CB974091BA88FAE00A159D4 /* mNectar SDK Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mNectar SDK Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CB9740D1BA88FAE00A159D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3CB9740E1BA88FAE00A159D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -215,6 +218,8 @@
 				3CB974351BA8903000A159D4 /* MNConstants.h */,
 				3CB974361BA8903000A159D4 /* MNDevice.h */,
 				3CB974371BA8903000A159D4 /* MNDevice.m */,
+				3CB7F89E1C18D4B4003738A9 /* MNWebView.h */,
+				3CB7F89F1C18D4B4003738A9 /* MNWebView.m */,
 				3CB974381BA8903000A159D4 /* MNInterstitial.h */,
 				3CB974391BA8903000A159D4 /* MNInterstitial.m */,
 				3CB9743A1BA8903000A159D4 /* MNMRAID.bundle */,
@@ -343,6 +348,7 @@
 				3C4A75641BBDACEB001193A0 /* AF2SecurityPolicy.m in Sources */,
 				3C4A75621BBDACEB001193A0 /* AF2HTTPSessionManager.m in Sources */,
 				3CB974121BA88FAE00A159D4 /* AppDelegate.m in Sources */,
+				3CB7F8A01C18D4B4003738A9 /* MNWebView.m in Sources */,
 				3CB974451BA8903000A159D4 /* MNInterstitial.m in Sources */,
 				3C4A75681BBDACEB001193A0 /* AF2URLSessionManager.m in Sources */,
 				3CB974431BA8903000A159D4 /* MNAdClient.m in Sources */,

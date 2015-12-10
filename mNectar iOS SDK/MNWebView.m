@@ -22,7 +22,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         if ([WKWebView class]) {
-            NSLog(@"using webkit");
             WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
             [config setAllowsInlineMediaPlayback:YES];
             [config setMediaPlaybackRequiresUserAction:NO];
@@ -35,8 +34,7 @@
             [self addSubview:_webView];
         }
         else
-        {
-            NSLog(@"not using webkit");            
+        {           
             _oldWebView = [[UIWebView alloc] initWithFrame:frame];
             [[_oldWebView scrollView] setScrollEnabled:NO];
             [_oldWebView setBackgroundColor:[UIColor clearColor]];
@@ -177,6 +175,12 @@
         return [_webView isLoading];
     }
     else return [_oldWebView isLoading];
+}
+
+- (void) dealloc
+{
+    [_webView setNavigationDelegate:nil];
+    [_oldWebView setDelegate:nil];
 }
 
 

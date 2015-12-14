@@ -209,6 +209,7 @@ static NSMutableDictionary *rewardables = nil;
     } else if ([command isEqualToString:@"MNReward"]) {
         if ([_delegate respondsToSelector:@selector(rewardableShouldRewardUser:reward:)]) {
             NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+            numberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US"];
             NSString *type = [arguments objectForKey:@"type"] ? [arguments objectForKey:@"type"] : nil;
             NSNumber *amount = [arguments objectForKey:@"amount"] ? [numberFormatter numberFromString:[arguments objectForKey:@"amount"]] : [NSNumber numberWithInt:0];
             MNReward *reward = [[MNReward alloc] initWithType:type amount:amount];

@@ -8,6 +8,37 @@
 
 #import "MNWebView.h"
 
+@interface WKWebView(SynchronousEvaluateJavaScript)
+- (NSString *)stringByEvaluatingJavaScript:(NSString *)script;
+@end
+
+@implementation WKWebView(SynchronousEvaluateJavaScript)
+
+- (NSString *)stringByEvaluatingJavaScript:(NSString *)script
+{
+    __block BOOL finished = NO;
+    __block NSString *resultString = nil;
+    
+    [self evaluateJavaScript:script completionHandler:^(id result, NSError *error) {
+        finished=YES;
+        if (error == nil) {
+            if (result != nil) {
+                resultString = [NSString stringWithFormat:@"%@", result];
+            }
+        } else {
+            NSLog(@"evaluateJavaScript error : %@", error.localizedDescription);
+        }
+    }];
+    
+    while (!finished)
+    {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0]];
+    }
+    
+    return resultString;
+}
+@end
+
 @interface MNWebView() <UIWebViewDelegate, WKNavigationDelegate>
 
 @property (nonatomic, strong) UIWebView *oldWebView;
@@ -52,6 +83,16 @@
 {
     if ([WKWebView class]);
     else [_oldWebView setScalesPageToFit:scale];
+}
+
+-(NSString *) stringByEvaluatingJavaScriptFromString:(NSString *)string
+{
+    if ([WKWebView class]) {
+        return [_webView stringByEvaluatingJavaScript:string];
+    }
+    else{
+        return [_oldWebView stringByEvaluatingJavaScriptFromString:string];
+    }
 }
 
 

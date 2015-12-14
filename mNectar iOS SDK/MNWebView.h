@@ -22,6 +22,7 @@
 @property (nonatomic, weak) id<MNWebViewDelegate> delegate;
 
 -(void) evaluateJavaScriptFromString:(NSString *)string;
+-(NSString *) stringByEvaluatingJavaScriptFromString:(NSString *)string;
 
 - (void)loadHTML:(NSString *)html baseURL:(NSURL *)baseURL;
 - (void)setFrame:(CGRect)frame;

@@ -1,10 +1,30 @@
 #import "MNMRAIDView.h"
+#import "MNWebView.h"
 
 #define MN_IMG_CLOSE_NORMAL "MNMRAID.bundle/cancel"
 #define MN_IMG_CLOSE_HIGHLIGHTED "MNMRAID.bundle/cancel_white"
 
-@interface MNMRAIDView () <UIWebViewDelegate>
+@interface MNMRAIDView () <MNWebViewDelegate>
 
+//@property (nonatomic, strong) UIWebView *oldWebView;
+//@property (nonatomic, strong) WKWebView *webView;
+
+@property (nonatomic, strong) MNWebView *webView;
+
+@property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
+@property (nonatomic, strong) UIImage *closeImageNormal;
+@property (nonatomic, strong) UIImage *closeImageHighlighted;
+
+
+@property (nonatomic, assign) MNMRAIDState state;
+
+@property (nonatomic, assign) CGSize expandSize;
+@property (nonatomic, assign) CGRect resizePosition;
+@property (nonatomic, assign) MNMRAIDPosition customClosePosition;
+@property (nonatomic, assign) BOOL allowOffscreen;
+@property (nonatomic, assign) CGRect currentPosition;
+@property (nonatomic, assign) CGRect defaultPosition;
+@property (nonatomic, assign) BOOL supportsInlineVideo;
 @end
 
 @implementation MNMRAIDView
@@ -14,13 +34,7 @@
     if (self = [super initWithFrame:frame]) {
         [self setBackgroundColor:[UIColor clearColor]];
         [self setOpaque:NO];
-
-        _webView = [[UIWebView alloc] initWithFrame:frame];
-        [[_webView scrollView] setScrollEnabled:NO];
-        [_webView setBackgroundColor:[UIColor clearColor]];
-        [_webView setOpaque:NO];
-        [_webView setAllowsInlineMediaPlayback:YES];
-        [_webView setMediaPlaybackRequiresUserAction:NO];
+        _webView = [[MNWebView alloc] initWithFrame:frame];
         [_webView setDelegate:self];
         [self addSubview:_webView];
 
@@ -61,11 +75,11 @@
     return self;
 }
 
-- (NSString *)inject:(NSString *)js
+- (void)inject:(NSString *)js
 {
-    return [_webView stringByEvaluatingJavaScriptFromString:js];
-}
 
+    [_webView evaluateJavaScriptFromString:js];
+}
 - (void)startLoading
 {
     [_loadingIndicator startAnimating];
@@ -122,12 +136,19 @@
     [self inject:@"var event = document.createEvent('OrientationEvent'); event.initEvent('orientationchange', false, false); window.dispatchEvent(event);"];
 }
 
+- (void)loadHTML:(NSString *)html baseURL:(NSURL *)baseURL
+{
+        [_webView loadHTML:html baseURL:baseURL];
+}
+
 #pragma mark - UIVIew
 
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
+    
     [_webView setFrame:frame];
+
     [_loadingIndicator setFrame:frame];
 
     [self updateCloseButton];
@@ -136,16 +157,16 @@
     [self fireSizeChange];
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - MNWebViewDelegate
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(MNWebView *)webView didFailLoadWithError:(NSError *)error
 {
     if ([_delegate respondsToSelector:@selector(mraidDidFail:)]) {
         [_delegate mraidDidFail:self];
     }
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+- (BOOL)webView:(MNWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     NSURL *url = [request URL];
 
@@ -276,6 +297,7 @@
 
     return YES;
 }
+
 
 #pragma mark - MRAID
 

@@ -32,13 +32,3 @@
 - (void)showAd;
 
 @end
-
-@interface MNReward : NSObject
-
-@property (nonatomic, readonly) NSString *type;
-@property (nonatomic, readonly) NSNumber *amount;
-
-- (MNReward *)initWithType:(NSString *)type amount:(NSNumber *)amount;
-- (MNReward *)initWithAmount:(NSNumber *)amount;
-
-@end
